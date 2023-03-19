@@ -16,6 +16,6 @@ Pull requests for any issues are welcome.
 In case where you would like to introduce a new feature or a major change, please open an issue first and discuss it with our team.
 
 ## License
-TBD
+The packages are available under the BSD license
 
 [![Cyber Alpaca](https://cyberalpaca.com/static/media/cyberalpaca-logo.60f51a65.svg)](https://cyberalpaca.com)
