@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 88
+
+per-file-ignores = 
+	#Undefined name exception
+	test.py: F821
+
+	#Line too long, unresolved imports, may be undefined
+	names.py: E501 F401 F403
