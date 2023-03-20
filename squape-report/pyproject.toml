@@ -1,0 +1,17 @@
+# squape-report/pyproject.toml
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["squape"]
+namespaces = true
+
+[project]
+name = "squape-report"
+version = "1.0.0"
+requires-python = ">=3.6"
+description = "Reporting Utilities for the Squish GUI Tester"
+license = { text = "..." }
