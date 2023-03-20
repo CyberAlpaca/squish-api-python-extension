@@ -1,0 +1,26 @@
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+include
+var
+sdist
+develop-eggs
+.installed.cfg
+pyvenv.cfg
+lib
+share/
+lib64
+__pycache__
+venv*/
+.venv*/
+
+# Installer logs
+pip-log.txt
+
+# VSCode
+.vscode
