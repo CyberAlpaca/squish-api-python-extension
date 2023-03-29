@@ -6,12 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 import sys
 from contextlib import contextmanager
-from enum import Enum
 
 import test
 
 
-class LogLevel(Enum):
+class LogLevel():
     DEBUG = 10
     LOG = 20
     WARNING = 30
