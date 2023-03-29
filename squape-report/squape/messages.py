@@ -8,6 +8,7 @@ import sys
 from contextlib import contextmanager
 
 import test
+import squish
 
 
 class LogLevel():
@@ -110,8 +111,8 @@ def fatal(msg: str, details: str = "") -> None:
     if __is_level_enabled(LogLevel.FATAL):
         test.fixateResultContext(1)
         try:
+            squish.testSettings.throwOnFailure = True
             test.fatal(msg, details)
-            sys.exit(1)
         finally:
             test.restoreResultContext()
 
