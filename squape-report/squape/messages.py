@@ -43,7 +43,7 @@ def debug(msg: str, details: str = "") -> None:
         detail (str, optional): Details of the message. Defaults to "".
     """
     if __is_level_enabled(LogLevel.DEBUG):
-        test.fixateResultContext(2)
+        test.fixateResultContext(1)
         try:
             test.log(f"[DEBUG] {msg}", details)
         finally:
@@ -59,7 +59,7 @@ def log(msg: str, details: str = "") -> None:
         detail (str, optional): Details of the message. Defaults to "".
     """
     if __is_level_enabled(LogLevel.LOG):
-        test.fixateResultContext(2)
+        test.fixateResultContext(1)
         try:
             test.log(msg, details)
         finally:
@@ -75,7 +75,7 @@ def warning(msg: str, details: str = "") -> None:
         detail (str, optional): Details of the message. Defaults to "".
     """
     if __is_level_enabled(LogLevel.WARNING):
-        test.fixateResultContext(2)
+        test.fixateResultContext(1)
         try:
             test.warning(msg, details)
         finally:
@@ -91,7 +91,7 @@ def fail(msg: str, details: str = "") -> None:
         detail (str, optional): Details of the message. Defaults to "".
     """
     if __is_level_enabled(LogLevel.FAIL):
-        test.fixateResultContext(2)
+        test.fixateResultContext(1)
         try:
             test.fail(msg, details)
         finally:
@@ -108,7 +108,7 @@ def fatal(msg: str, details: str = "") -> None:
         detail (str, optional): Details of the message. Defaults to "".
     """
     if __is_level_enabled(LogLevel.FATAL):
-        test.fixateResultContext(2)
+        test.fixateResultContext(1)
         try:
             test.fatal(msg, details)
             sys.exit(1)
@@ -130,7 +130,7 @@ def section(title: str, description: str = "") -> None:
             squish.mouseClick(squish.waitForObject(names.ok_button))
     """
 
-    test.fixateResultContext(2)
+    test.fixateResultContext(1)
     test.startSection(title, description)
     test.restoreResultContext()
     try:
