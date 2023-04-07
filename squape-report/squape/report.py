@@ -161,6 +161,39 @@ def fatal(msg: str, details: str = "") -> None:
             test.restoreResultContext()
 
 
+def enable_loglevel_in_test_module():
+    """Adds support for log levels to the Squish 'test' module.
+
+    DISCLAIMER: This function uses monkeypathching
+    https://en.wikipedia.org/wiki/Monkey_patch
+
+    This function overwrites some of the existing functions in the 'test' module
+    to support logging at different log levels.
+    Furthermore, it enhances the functionality of the 'test' module by adding
+    a new test.debug(...) function.
+
+    By default, the 'test' module does not support LOGLEVEL at all.
+    However, this function adds support for setting the log level to a higher
+    or lower level, depending on the needs of the developer.
+
+    After calling this function, the following 'test' module's functions will support
+    LOGLEVEL report setting:
+    - test.debug(...)
+    - test.log(...)
+    - test.warning(...)
+    - test.fail(...)
+    - test.fatal(...)
+
+    Returns:
+        None
+    """
+    test.debug = debug
+    test.log = log
+    test.warning = warning
+    test.fail = fail
+    test.fatal = fatal
+
+
 @contextmanager
 def section(title: str, description: str = "") -> None:
     """Allows using Squish's sections as context managers
