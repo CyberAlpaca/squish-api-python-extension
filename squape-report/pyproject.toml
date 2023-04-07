@@ -11,7 +11,7 @@ namespaces = true
 
 [project]
 name = "squape-report"
-version = "1.0.0"
-requires-python = ">=3.6"
+version = "0.1.0"
+requires-python = ">=3.8"
 description = "Reporting Utilities for the Squish GUI Tester"
 license = { text = "..." }

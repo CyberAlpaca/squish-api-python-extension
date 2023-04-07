@@ -2,7 +2,7 @@
 Python package that extends Squish Python API. It provides tools for everyday automated test cases development.
 
 ### Requirements
-To enjoy all the features of the SQUAPE package, you have to use it with Squish version 7.0.0 or newer. 
+To enjoy all the features of the SQUAPE package, you have to use it with Squish version 6.7.0 or newer. 
 
 ### Installation
 The packages are available on the Python Package Index (PyPI).
@@ -19,6 +19,9 @@ Pull requests for any issues are welcome.
 In case where you would like to introduce a new feature or a major change, please open an issue first and discuss it with our team.
 
 ## License
-The packages are available under the BSD license
+The packages are available under The 3-Clause BSD License
+
+## References
+- [Squish by the Qt Group](https://www.qt.io/product/quality-assurance/squish)  
 
 [![Cyber Alpaca](https://cyberalpaca.com/static/media/cyberalpaca-logo.60f51a65.svg)](https://cyberalpaca.com)
