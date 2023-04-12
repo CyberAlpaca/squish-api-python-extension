@@ -136,7 +136,8 @@ def fail(msg: str, details: str = "") -> None:
 
 
 def fatal(msg: str, details: str = "") -> None:
-    """Adds a fatal entry with the given message and details to a test report.
+    """Adds a fatal entry with the given message and details to a test report,
+    then aborts the test case execution.
 
     This function adds a fatal message to Squish's test report at the FATAL log level
     or lower, depending on the current log level setting.
@@ -144,6 +145,8 @@ def fatal(msg: str, details: str = "") -> None:
 
     The fatal message will only be visible if the LOGLEVEL is set to FATAL or lower.
     Otherwise, it will be ignored and not included in the test report.
+
+    After adding the fatal message, the function aborts the test case execution.
 
     Args:
     - msg (str): The message to include in the fatal entry.
