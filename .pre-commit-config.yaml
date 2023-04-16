@@ -1,4 +1,4 @@
-default_languages_version:
+default_language_version:
     python: python3.8
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -11,9 +11,13 @@ repos:
       - id: fix-encoding-pragma
  
   - repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.8.1
+    rev: v3.9.0
     hooks:
       - id: reorder-python-imports
+        args: [
+          --unclassifiable-application-module, squish, 
+          --unclassifiable-application-module, test,
+        ]
  
   - repo: https://github.com/psf/black
     rev: 22.6.0
