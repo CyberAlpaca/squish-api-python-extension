@@ -11,13 +11,13 @@ namespaces = false
 
 [project]
 name = "squape"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     { name="Cyber Alpaca", email="contact@cyberalpaca.com" },
 ]
 requires-python = ">=3.8"
 readme = "README.md"
-description = "Reporting Utilities for the Squish GUI Tester"
+description = "Python utilities for the Squish GUI Tester"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
