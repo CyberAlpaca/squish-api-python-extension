@@ -1,6 +1,6 @@
 ![Squish - version](https://img.shields.io/badge/Squish-v6.7.0+-brightgreen)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/squape)
-![PyPI - License](https://img.shields.io/pypi/l/squape)
+![PyPI - License](https://img.shields.io/pypi/l/SQUAPE)
 # SQUAPE - Squish API Python Extension
 Python package that extends Squish Python API. It provides tools for everyday automated test cases development.
 
