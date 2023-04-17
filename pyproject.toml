@@ -20,6 +20,8 @@ readme = "README.md"
 description = "Reporting Utilities for the Squish GUI Tester"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.10",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
 ]
