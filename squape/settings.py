@@ -11,7 +11,17 @@ import squish
 
 @contextmanager
 def _ctx_settings(setting_name, value):
+    """
+     A context manager that temporarily sets a Squish testSettings to a given value.
 
+    Args:
+        setting_name (str): The name of the Squish testSettings to set.
+        value (Any): The value to set the Squish test setting to.
+
+    Raises:
+        SquishCapability: If the Squish version does not support the given test setting.
+
+    """
     try:
         current_value = getattr(squish.testSettings, setting_name)
         setattr(squish.testSettings, setting_name, value)
