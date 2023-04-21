@@ -5,9 +5,10 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
-from squape.internal.exceptions import SquishCapability
 
 import squish
+from squape.internal.exceptions import SquishCapability
+
 
 @contextmanager
 def _ctx_settings(setting_name, value):
@@ -25,7 +26,7 @@ def _ctx_settings(setting_name, value):
     try:
         current_value = getattr(squish.testSettings, setting_name)
         setattr(squish.testSettings, setting_name, value)
-    except AttributeError as _:
+    except AttributeError:
         raise SquishCapability(
             f"Your Squish version does not support test setting {setting_name}"
         )
@@ -39,40 +40,41 @@ def _ctx_settings(setting_name, value):
 
 
 @contextmanager
-def logScreenshotOnPass(enabled: bool) -> None:
+def logScreenshotOnPass(enabled=True) -> None:
     """Allows using logScreenshotOnPass test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonpass
 
     Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on PASS test result.
+        of screenshots on PASS test result. Defaulting to True.
+
     """
     with _ctx_settings("logScreenshotOnPass", enabled) as c:
         yield [c]
 
 
 @contextmanager
-def logScreenshotOnFail(enabled: bool) -> None:
+def logScreenshotOnFail(enabled=True) -> None:
     """Allows using logScreenshotOnFail test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonfail
 
     Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on FAIL test result.
+        of screenshots on FAIL test result. Defaulting to True.
     """
 
-    with _ctx_settings("logScreenshotOnFail", enabled) as c:
+    with _ctx_settings("logScreenshotOnFail2", enabled) as c:
         yield [c]
 
 
 @contextmanager
-def logScreenshotOnWarning(enabled: bool) -> None:
+def logScreenshotOnWarning(enabled=True) -> None:
     """Allows using logScreenshotOnWarning test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonwarning
 
      Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on warning log entry.
+        of screenshots on warning log entry. Defaulting to True.
 
     """
     with _ctx_settings("logScreenshotOnWarning", enabled) as c:
@@ -80,13 +82,13 @@ def logScreenshotOnWarning(enabled: bool) -> None:
 
 
 @contextmanager
-def logScreenshotOnError(enabled: bool) -> None:
+def logScreenshotOnError(enabled=True) -> None:
     """Allows using logScreenshotOnError test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonerror
 
     Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on script error.
+        of screenshots on script error. Defaulting to True.
 
     """
     current_value = squish.testSettings.logScreenshotOnError
@@ -96,12 +98,12 @@ def logScreenshotOnError(enabled: bool) -> None:
 
 
 @contextmanager
-def silentVerifications(enabled: bool) -> None:
+def silentVerifications(enabled=True) -> None:
     """Allows using silentVerifications test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-silentverifications
 
     Args:
-        enabled (bool): Whether silent verifications are enabled.
+        enabled (bool): Whether silent verifications are enabled. Defaulting to True
 
     """
     with _ctx_settings("silentVerifications", enabled) as c:
@@ -109,12 +111,13 @@ def silentVerifications(enabled: bool) -> None:
 
 
 @contextmanager
-def imageSearchTolerant(enabled: bool) -> None:
+def imageSearchTolerant(enabled=True) -> None:
     """Allows using imageSearchTolerant test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-imagesearchtolerant
 
     Args:
         enabled (bool): Whether image search with tolerance is enabled.
+        Defaulting to True.
     """
     with _ctx_settings("imageSearchTolerant", enabled) as c:
         yield [c]
@@ -133,12 +136,12 @@ def imageSearchThreshold(threshold: float) -> None:
 
 
 @contextmanager
-def imageSearchMultiscale(enabled: bool) -> None:
+def imageSearchMultiscale(enabled=True) -> None:
     """Allows using imageSearchMultiscale test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-imagesearchmultiscale
 
     Args:
-        enabled (bool): Whether multi-scale image search is enabled.
+        enabled (bool): Whether multi-scale image search is enabled. Defaulting to True
 
     """
     with _ctx_settings("imageSearchMultiscale", enabled) as c:
