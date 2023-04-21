@@ -5,9 +5,9 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
+from squape.internal.exceptions import SquishCapability
 
 import squish
-
 
 @contextmanager
 def _ctx_settings(setting_name, value):
@@ -15,9 +15,9 @@ def _ctx_settings(setting_name, value):
     try:
         current_value = getattr(squish.testSettings, setting_name)
         setattr(squish.testSettings, setting_name, value)
-    except AttributeError as err:
-        raise AttributeError(
-            f"Your Squish version does not support test setting {setting_name}\n{err}"
+    except AttributeError as _:
+        raise SquishCapability(
+            f"Your Squish version does not support test setting {setting_name}"
         )
 
     try:
