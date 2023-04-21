@@ -82,22 +82,6 @@ def logScreenshotOnWarning(enabled=True) -> None:
 
 
 @contextmanager
-def logScreenshotOnError(enabled=True) -> None:
-    """Allows using logScreenshotOnError test setting as context managers.
-    https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonerror
-
-    Args:
-        enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on script error. Defaulting to True.
-
-    """
-    current_value = squish.testSettings.logScreenshotOnError
-    squish.testSettings.logScreenshotOnError = enabled
-    yield
-    squish.testSettings.logScreenshotOnError = current_value
-
-
-@contextmanager
 def silentVerifications(enabled=True) -> None:
     """Allows using silentVerifications test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-silentverifications
