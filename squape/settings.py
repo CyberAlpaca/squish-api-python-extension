@@ -49,8 +49,8 @@ def logScreenshotOnPass(enabled=True) -> None:
         of screenshots on PASS test result. Defaulting to True.
 
     """
-    with _ctx_settings("logScreenshotOnPass", enabled) as c:
-        yield [c]
+    with _ctx_settings("logScreenshotOnPass", enabled):
+        yield
 
 
 @contextmanager
@@ -63,8 +63,8 @@ def logScreenshotOnFail(enabled=True) -> None:
         of screenshots on FAIL test result. Defaulting to True.
     """
 
-    with _ctx_settings("logScreenshotOnFail2", enabled) as c:
-        yield [c]
+    with _ctx_settings("logScreenshotOnFail", enabled):
+        yield
 
 
 @contextmanager
@@ -77,8 +77,8 @@ def logScreenshotOnWarning(enabled=True) -> None:
         of screenshots on warning log entry. Defaulting to True.
 
     """
-    with _ctx_settings("logScreenshotOnWarning", enabled) as c:
-        yield [c]
+    with _ctx_settings("logScreenshotOnWarning", enabled):
+        yield
 
 
 @contextmanager
@@ -90,8 +90,8 @@ def silentVerifications(enabled=True) -> None:
         enabled (bool): Whether silent verifications are enabled. Defaulting to True
 
     """
-    with _ctx_settings("silentVerifications", enabled) as c:
-        yield [c]
+    with _ctx_settings("silentVerifications", enabled):
+        yield
 
 
 @contextmanager
@@ -103,8 +103,8 @@ def imageSearchTolerant(enabled=True) -> None:
         enabled (bool): Whether image search with tolerance is enabled.
         Defaulting to True.
     """
-    with _ctx_settings("imageSearchTolerant", enabled) as c:
-        yield [c]
+    with _ctx_settings("imageSearchTolerant", enabled):
+        yield
 
 
 @contextmanager
@@ -115,8 +115,8 @@ def imageSearchThreshold(threshold: float) -> None:
     Args:
         threshold (float): the threshold for image search.
     """
-    with _ctx_settings("imageSearchThreshold", threshold) as c:
-        yield [c]
+    with _ctx_settings("imageSearchThreshold", threshold):
+        yield
 
 
 @contextmanager
@@ -128,8 +128,8 @@ def imageSearchMultiscale(enabled=True) -> None:
         enabled (bool): Whether multi-scale image search is enabled. Defaulting to True
 
     """
-    with _ctx_settings("imageSearchMultiscale", enabled) as c:
-        yield [c]
+    with _ctx_settings("imageSearchMultiscale", enabled):
+        yield
 
 
 @contextmanager
@@ -140,8 +140,8 @@ def imageSearchMinScale(min_scale: float) -> None:
     Args:
         min_scale (float): A float value indicating the minimum scale for image search.
     """
-    with _ctx_settings("imageSearchMinScale", min_scale) as c:
-        yield [c]
+    with _ctx_settings("imageSearchMinScale", min_scale):
+        yield
 
 
 @contextmanager
@@ -152,8 +152,8 @@ def imageSearchMaxScale(max_scale: float) -> None:
     Args:
         max_scale (float): A float value indicating the maximum scale for image search.
     """
-    with _ctx_settings("imageSearchMaxScale", max_scale) as c:
-        yield [c]
+    with _ctx_settings("imageSearchMaxScale", max_scale):
+        yield
 
 
 @contextmanager
@@ -164,8 +164,8 @@ def waitForObjectTimeout(timeout_ms: int) -> None:
     Args:
         timeout_ms (int): A integer value indicating the timeout in ms.
     """
-    with _ctx_settings("waitForObjectTimeout", timeout_ms) as c:
-        yield [c]
+    with _ctx_settings("waitForObjectTimeout", timeout_ms):
+        yield
 
 
 @contextmanager
@@ -177,8 +177,8 @@ def objectNotFoundDebugging(enabled: bool) -> None:
         enabled (bool): Whether to enable debugging when object is not found.
 
     """
-    with _ctx_settings("objectNotFoundDebugging", enabled) as c:
-        yield [c]
+    with _ctx_settings("objectNotFoundDebugging", enabled):
+        yield
 
 
 @contextmanager
@@ -189,8 +189,8 @@ def imageNotFoundDebugging(enabled: bool) -> None:
      Args:
         enabled (bool): Whether to enable debugging when image is not found.
     """
-    with _ctx_settings("imageNotFoundDebugging", enabled) as c:
-        yield [c]
+    with _ctx_settings("imageNotFoundDebugging", enabled):
+        yield
 
 
 @contextmanager
@@ -202,8 +202,8 @@ def textNotFoundDebugging(enabled: bool) -> None:
         enabled (bool): Whether to enable debugging when a OCR Text is not found.
 
     """
-    with _ctx_settings("textNotFoundDebugging", enabled) as c:
-        yield [c]
+    with _ctx_settings("textNotFoundDebugging", enabled):
+        yield
 
 
 @contextmanager
@@ -216,8 +216,8 @@ def defaultOcrLanguage(language: str) -> None:
         for OCR Text search
 
     """
-    with _ctx_settings("defaultOcrLanguage", language) as c:
-        yield [c]
+    with _ctx_settings("defaultOcrLanguage", language):
+        yield
 
 
 @contextmanager
@@ -230,8 +230,8 @@ def breakOnFailure(enabled: bool) -> None:
         on every failed verification
 
     """
-    with _ctx_settings("breakOnFailure", enabled) as c:
-        yield [c]
+    with _ctx_settings("breakOnFailure", enabled):
+        yield
 
 
 @contextmanager
@@ -244,8 +244,8 @@ def throwOnFailure(enabled: bool) -> None:
         on every failed verification
 
     """
-    with _ctx_settings("throwOnFailure", enabled) as c:
-        yield [c]
+    with _ctx_settings("throwOnFailure", enabled):
+        yield
 
 
 @contextmanager
@@ -258,5 +258,5 @@ def retryDuration(duration_ms: int) -> None:
         the verification fails
 
     """
-    with _ctx_settings("retryDuration", duration_ms) as c:
-        yield [c]
+    with _ctx_settings("retryDuration", duration_ms):
+        yield
