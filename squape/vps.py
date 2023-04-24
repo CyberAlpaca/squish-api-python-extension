@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import squish
 import test
-
+import time
 
 def vph_property(
     object_name: any, property_name: str, expected_value: any, msg: str
@@ -28,5 +28,5 @@ def vph_property(
     property_value = getattr(obj, property_name)
     squish.highlightObject(obj, 200, False)
     result = test.compare(property_value, expected_value, msg)
-    squish.snooze(0.2)
+    time.sleep(0.200)
     return result
