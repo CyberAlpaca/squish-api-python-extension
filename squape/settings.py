@@ -305,6 +305,10 @@ def throwOnFailure(enabled: bool) -> None:
         enabled (bool): Whether to enable to raise a script error
         on every failed verification
 
+    Example:
+    with throwOnFailure():
+        # code with verifications
+
     """
     with _ctx_settings("throwOnFailure", enabled):
         yield
@@ -318,6 +322,10 @@ def retryDuration(duration_ms: int) -> None:
     Args:
         duration_ms (int): The duration in milliseconds after which
         the verification fails
+
+    Example:
+        with retryDuration(5000):
+            test.vp("VP1")
 
     """
     with _ctx_settings("retryDuration", duration_ms):
