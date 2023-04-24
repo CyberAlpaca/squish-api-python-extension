@@ -40,7 +40,7 @@ def _ctx_settings(setting_name, value):
 
 
 @contextmanager
-def logScreenshotOnPass(enabled=True) -> None:
+def logScreenshotOnPass(enabled: bool = True) -> None:
     """Allows using logScreenshotOnPass test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonpass
 
@@ -57,7 +57,7 @@ def logScreenshotOnPass(enabled=True) -> None:
 
 
 @contextmanager
-def logScreenshotOnFail(enabled=True) -> None:
+def logScreenshotOnFail(enabled: bool = True) -> None:
     """Allows using logScreenshotOnFail test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonfail
 
@@ -75,7 +75,7 @@ def logScreenshotOnFail(enabled=True) -> None:
 
 
 @contextmanager
-def logScreenshotOnWarning(enabled=True) -> None:
+def logScreenshotOnWarning(enabled: bool = True) -> None:
     """Allows using logScreenshotOnWarning test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonwarning
 
@@ -92,7 +92,7 @@ def logScreenshotOnWarning(enabled=True) -> None:
 
 
 @contextmanager
-def silentVerifications(enabled=True) -> None:
+def silentVerifications(enabled: bool = True) -> None:
     """Allows using silentVerifications test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-silentverifications
 
@@ -108,7 +108,7 @@ def silentVerifications(enabled=True) -> None:
 
 
 @contextmanager
-def imageSearchTolerant(enabled=True) -> None:
+def imageSearchTolerant(enabled: bool = True) -> None:
     """Allows using imageSearchTolerant test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-imagesearchtolerant
 
@@ -142,7 +142,7 @@ def imageSearchThreshold(threshold: float) -> None:
 
 
 @contextmanager
-def imageSearchMultiscale(enabled=True) -> None:
+def imageSearchMultiscale(enabled: bool = True) -> None:
     """Allows using imageSearchMultiscale test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-imagesearchmultiscale
 
@@ -280,7 +280,7 @@ def defaultOcrLanguage(language: str) -> None:
 
 
 @contextmanager
-def breakOnFailure(enabled=True) -> None:
+def breakOnFailure(enabled: bool = True) -> None:
     """Allows using breakOnFailure test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-breakonfailure
 
