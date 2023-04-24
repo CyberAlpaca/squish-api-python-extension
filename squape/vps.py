@@ -4,9 +4,11 @@
 # All rights reserved.
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
+import time
+
 import squish
 import test
-import time
+
 
 def vph_property(
     object_name: any, property_name: str, expected_value: any, msg: str
