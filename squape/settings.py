@@ -7,7 +7,7 @@
 from contextlib import contextmanager
 
 import squish
-from squape.internal.exceptions import SquishCapability
+from squape.internal.exceptions import SquishCapabilityError
 
 
 @contextmanager
@@ -27,7 +27,7 @@ def _ctx_settings(setting_name, value):
         current_value = getattr(squish.testSettings, setting_name)
         setattr(squish.testSettings, setting_name, value)
     except AttributeError:
-        raise SquishCapability(
+        raise SquishCapabilityError(
             f"Your Squish version does not support test setting {setting_name}"
         )
 

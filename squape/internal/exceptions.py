@@ -5,10 +5,12 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 
-class SquishCapability(Exception):
-    """ 
-    Indicate that squape functionality cannot be used 
-    because it is not supported by Squish version in use. 
+
+class SquishCapabilityError(Exception):
     """
-    def __init__(self, message):            
+    Indicate that squape functionality cannot be used
+    because it is not supported by Squish version in use.
+    """
+
+    def __init__(self, message):
         super().__init__(message)
