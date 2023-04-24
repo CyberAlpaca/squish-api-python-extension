@@ -8,7 +8,7 @@ import time
 
 import squish
 import test
-
+import operator
 
 def vph_property(
     object_name: any, property_name: str, expected_value: any, msg: str
@@ -27,7 +27,7 @@ def vph_property(
     """
 
     obj = squish.waitForObjectExists(object_name)
-    property_value = getattr(obj, property_name)
+    property_value = operator.attrgetter(property_name)(obj)
     squish.highlightObject(obj, 200, False)
     result = test.compare(property_value, expected_value, msg)
     time.sleep(0.200)
