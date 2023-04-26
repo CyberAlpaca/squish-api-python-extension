@@ -73,15 +73,20 @@ def _remove_videos(videos: set) -> None:
 
 
 @contextmanager
-def video_capture(message: str, delete_on_success: bool = False) -> None:
+def video_capture(message: str = None, delete_on_success: bool = False) -> None:
     """Allows using Squish's video capture as context managers.
     https://doc.qt.io/squish/squish-api.html#test-startvideocapture-message
     Optionally delete a captured video when the execution was successful (no failures)
 
     Args:
-        message (str): log a video n the test report using the specified message
+        message (str): log a video n the test report using the specified message.
+        Defaulting to None.
         delete_on_success (bool): Whether to delete captured video
         when there were no failures. Defaulting to False.
+
+    Example:
+        with video_capture(delete_on_success=True):
+            # code with actions and verifications
 
     """
 
@@ -89,14 +94,22 @@ def video_capture(message: str, delete_on_success: bool = False) -> None:
         initial_videos = _videos_set()
         initial_result_count = _failures_results_count()
 
-    test.startVideoCapture(message)
+    if message is not None:
+        test.startVideoCapture(message)
+    else:
+        test.startVideoCapture()
 
     try:
         yield
     except Exception:
         raise
     finally:
-        test.stopVideoCapture(message)
+
+        if message is not None:
+            test.stopVideoCapture(message)
+        else:
+            test.stopVideoCapture()
+
         if delete_on_success:
             new_failures = _failures_results_count() - initial_result_count
             if new_failures == 0:
