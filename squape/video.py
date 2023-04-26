@@ -115,3 +115,12 @@ def video_capture(message: str = None, delete_on_success: bool = False) -> None:
             if new_failures == 0:
                 new_videos = _videos_set() - initial_videos
                 _remove_videos(new_videos)
+
+
+def delete_videos_on_success() -> None:
+    """
+    Delete all captured videos when the execution was successful (no failures)
+    """
+    if _failures_results_count() == 0:
+        videos_to_remove = _videos_set()
+        _remove_videos(videos_to_remove)
