@@ -8,7 +8,6 @@ import os
 from contextlib import contextmanager
 
 import squishinfo
-
 import test
 
 
