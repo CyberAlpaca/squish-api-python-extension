@@ -42,15 +42,15 @@ def _videos_set() -> set:
         "attachments",
     )
 
-    videos_list = set()
+    videos_set = set()
 
     if not os.path.exists(video_dir):
-        return videos_list
+        return videos_set
 
     for file in os.listdir(video_dir):
         if file.endswith(".mp4"):
-            videos_list.add(file)
-    return videos_list
+            videos_set.add(file)
+    return videos_set
 
 
 def _remove_videos(videos: set) -> None:
