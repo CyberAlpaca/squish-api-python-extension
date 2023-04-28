@@ -86,7 +86,7 @@ def _replace_videos(videos: set) -> None:
 
 
 @contextmanager
-def video_capture(message: str = None, remove_on_success: bool = False) -> None:
+def video_capture(message: str = "", remove_on_success: bool = False) -> None:
     """Allows using Squish's video capture as context managers.
     https://doc.qt.io/squish/squish-api.html#test-startvideocapture-message
     Optionally (when the execution was successful) replace captured video
@@ -94,7 +94,7 @@ def video_capture(message: str = None, remove_on_success: bool = False) -> None:
 
     Args:
         message (str): log a video n the test report using the specified message.
-        Defaulting to None.
+        Defaulting to empty string.
         remove_on_success (bool): Whether to replace captured video
         when there were no failures. Defaulting to False.
 
@@ -108,10 +108,7 @@ def video_capture(message: str = None, remove_on_success: bool = False) -> None:
         initial_videos = _videos_set()
         initial_result_count = _failures_results_count()
 
-    if message is not None:
-        test.startVideoCapture(message)
-    else:
-        test.startVideoCapture()
+    test.startVideoCapture(message)
 
     try:
         yield
@@ -119,10 +116,7 @@ def video_capture(message: str = None, remove_on_success: bool = False) -> None:
         raise
     finally:
 
-        if message is not None:
-            test.stopVideoCapture(message)
-        else:
-            test.stopVideoCapture()
+        test.stopVideoCapture(message)
 
         if remove_on_success:
             new_failures = _failures_results_count() - initial_result_count
