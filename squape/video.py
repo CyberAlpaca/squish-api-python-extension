@@ -56,13 +56,13 @@ def _videos_set() -> set:
     return videos_set
 
 
-def _remove_videos(videos: set) -> None:
+def _replace_videos(videos: set) -> None:
     """
-    Remove videos from the attachments directory. The original video will be replaced
+    Replace original videos from the attachments directory
     with a placeholder video with size of 10.6 KB.
 
     Args:
-        videos (set): A set of video names to remove.
+        videos (set): A set of video names to replace.
         Does nothing when the set is empty.
     """
 
@@ -127,7 +127,7 @@ def video_capture(message: str = None, remove_on_success: bool = False) -> None:
             new_failures = _failures_results_count() - initial_result_count
             if new_failures == 0:
                 new_videos = _videos_set() - initial_videos
-                _remove_videos(new_videos)
+                _replace_videos(new_videos)
 
 
 def remove_videos_on_success() -> None:
@@ -136,4 +136,4 @@ def remove_videos_on_success() -> None:
     """
     if _failures_results_count() == 0:
         videos_to_remove = _videos_set()
-        _remove_videos(videos_to_remove)
+        _replace_videos(videos_to_remove)
