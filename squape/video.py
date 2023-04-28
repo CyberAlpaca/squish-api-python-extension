@@ -14,7 +14,7 @@ import squishinfo
 import test
 
 
-def _failures_results_count() -> int:
+def _failure_results_count() -> int:
     """
     This function returns the total number of failures in test results by adding up
     all the counts for errors, fatals, xpasses and fails.
@@ -106,7 +106,7 @@ def video_capture(message: str = "", remove_on_success: bool = False) -> None:
 
     if remove_on_success:
         initial_videos = _videos_set()
-        initial_result_count = _failures_results_count()
+        initial_result_count = _failure_results_count()
 
     test.startVideoCapture(message)
 
@@ -119,7 +119,7 @@ def video_capture(message: str = "", remove_on_success: bool = False) -> None:
         test.stopVideoCapture(message)
 
         if remove_on_success:
-            new_failures = _failures_results_count() - initial_result_count
+            new_failures = _failure_results_count() - initial_result_count
             if new_failures == 0:
                 new_videos = _videos_set() - initial_videos
                 _replace_videos(new_videos)
@@ -129,6 +129,6 @@ def remove_videos_on_success() -> None:
     """
     Remove all captured videos when the execution was successful (no failures)
     """
-    if _failures_results_count() == 0:
+    if _failure_results_count() == 0:
         videos_to_remove = _videos_set()
         _replace_videos(videos_to_remove)
