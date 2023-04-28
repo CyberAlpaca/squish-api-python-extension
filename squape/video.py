@@ -89,16 +89,17 @@ def _replace_videos(videos: set) -> None:
 def video_capture(message: str = None, remove_on_success: bool = False) -> None:
     """Allows using Squish's video capture as context managers.
     https://doc.qt.io/squish/squish-api.html#test-startvideocapture-message
-    Optionally remove a captured video when the execution was successful (no failures)
+    Optionally (when the execution was successful) replace captured video
+    with a tiny placeholder video to save test results size.
 
     Args:
         message (str): log a video n the test report using the specified message.
         Defaulting to None.
-        delete_on_success (bool): Whether to remove captured video
+        remove_on_success (bool): Whether to replace captured video
         when there were no failures. Defaulting to False.
 
     Example:
-        with video_capture(delete_on_success=True):
+        with video_capture(remove_on_success=True):
             # code with actions and verifications
 
     """
