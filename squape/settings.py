@@ -8,6 +8,7 @@ from contextlib import contextmanager
 
 import squish
 from squape.internal.exceptions import SquishCapabilityError
+from squape.report import debug
 
 
 @contextmanager
@@ -25,6 +26,9 @@ def _ctx_settings(setting_name, value):
     """
     try:
         current_value = getattr(squish.testSettings, setting_name)
+        debug(
+            f"Setting value of '{setting_name}' setting from {current_value} to {value}"
+        )
         setattr(squish.testSettings, setting_name, value)
     except AttributeError:
         raise SquishCapabilityError(
@@ -36,6 +40,9 @@ def _ctx_settings(setting_name, value):
     except Exception:
         raise
     finally:
+        debug(
+            f"Setting value of '{setting_name}' setting from {value} to {current_value}"
+        )
         setattr(squish.testSettings, setting_name, current_value)
 
 
