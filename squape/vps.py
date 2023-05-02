@@ -4,6 +4,7 @@
 # All rights reserved.
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
+import operator
 import time
 
 import squish
@@ -27,7 +28,7 @@ def vph_property(
     """
 
     obj = squish.waitForObjectExists(object_name)
-    property_value = getattr(obj, property_name)
+    property_value = operator.attrgetter(property_name)(obj)
     squish.highlightObject(obj, 200, False)
     result = test.compare(property_value, expected_value, msg)
     time.sleep(0.200)
