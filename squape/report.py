@@ -32,15 +32,19 @@ def set_level(level) -> None:
 
     Args:
         level (int|str): log level to set
+
+    Examples:
+       set_level(report.LogLevel.WARNING)
+       set_level("FAIL")
     """
     global LOGLEVEL
-    LOGLEVEL = _translate_Level(level)
+    LOGLEVEL = __translate_Level(level)
 
 
 LOGLEVEL = set_level(LogLevel.LOG)
 
 
-def _translate_Level(level) -> int:
+def __translate_Level(level) -> int:
     """Translates the given log level to valid LogLevel
 
     Args:
