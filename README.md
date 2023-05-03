@@ -16,9 +16,10 @@ pip install squape
 
 ### Content
 The package consists of several modules:
-- report - adds features to enhance the reporting and verification capabilities of Squish.
-- settings - allows using various test settings as context managers
-- video - adds features to enhance video capture capabilities of Squish.
+- report - adds features to enhance the reporting capabilities of Squish
+- settings - makes using various test settings easier and cleaner
+- video - adds features to enhance video capture capabilities of Squish
+- vps - extension of Squish verification points
 
 ## Contribution
 The package is created and maintained by [Cyber Alpaca](https://cyberalpaca.com/)  
