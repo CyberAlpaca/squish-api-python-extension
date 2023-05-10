@@ -31,15 +31,12 @@ class SquishServer:
                 f"Unable to connect to squishserver ({host}:{port})"
             )
 
-    def _config_squishserver(self, config_option: str, params=None, cwd=None) -> tuple:
+    def _config_squishserver(self, config_option: str, params=None, cwd=None):
         """A helper function that contains general code for the squishserver congifuration
 
         Args:
             config_option (str): the config option to be used during configuration
             params (list, optional): the configuration parameters. Defaults to [].
-
-        Returns:
-            (exitcode, stdout, stderr)(tuple): the result of the command execution
         """
         if params is None:
             params = []
@@ -48,7 +45,14 @@ class SquishServer:
             cwd = self.location
 
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
-        return (exitcode, stdout, stderr)
+        if exitcode != "0":
+            raise SquishserverError(
+                "Squishserver was not able to perform "
+                f"{config_option} configuration operation"
+                f"\nexit code: {exitcode}"
+                f"\nstdout: {stdout}"
+                f"\nstderr: {stderr}"
+            )
 
     def addAUT(self, aut: str, path: str) -> None:
         """Register an AUT
@@ -58,14 +62,7 @@ class SquishServer:
             path (str): path to the executable folder
         """
         log(f"Registering AUT {aut} with location: {path}")
-        (exitcode, stdout, stderr) = self._config_squishserver("addAUT", [aut, path])
-        if exitcode != "0":
-            raise SquishserverError(
-                "Squishserver was not able to register the AUT"
-                f"exit code: {exitcode}"
-                f"stdout: {stdout}"
-                f"stderr: {stderr}"
-            )
+        self._config_squishserver("addAUT", [aut, path])
 
     def removeAUT(self, aut: str, path: str) -> None:
         """Remove an registered AUT
@@ -75,14 +72,7 @@ class SquishServer:
             path (str): path to the executable folder
         """
         log(f"Removing registered AUT {aut} with location: {path}")
-        (exitcode, stdout, stderr) = self._config_squishserver("removeAUT", [aut, path])
-        if exitcode != "0":
-            raise SquishserverError(
-                "Squishserver was not able to remove registered the AUT"
-                f"exit code: {exitcode}"
-                f"stdout: {stdout}"
-                f"stderr: {stderr}"
-            )
+        self._config_squishserver("removeAUT", [aut, path])
 
     def addAppPath(self, path: str) -> None:
         """Register an AUT path
@@ -91,14 +81,7 @@ class SquishServer:
             path (str): the AUT path to register
         """
         log(f"Registering AUT path: {path}")
-        (exitcode, stdout, stderr) = self._config_squishserver("addAppPath", [path])
-        if exitcode != "0":
-            raise SquishserverError(
-                "Squishserver was not able to register the AUT path"
-                f"exit code: {exitcode}"
-                f"stdout: {stdout}"
-                f"stderr: {stderr}"
-            )
+        self._config_squishserver("addAppPath", [path])
 
     def removeAppPath(self, path: str) -> None:
         """Remove an registered AUT path
@@ -107,14 +90,7 @@ class SquishServer:
             path (str): the path to the AUT
         """
         log(f"Removing registered AUT path: {path}")
-        (exitcode, stdout, stderr) = self._config_squishserver("removeAppPath", [path])
-        if exitcode != "0":
-            raise SquishserverError(
-                "Squishserver was not able to register the AUT path"
-                f"exit code: {exitcode}"
-                f"stdout: {stdout}"
-                f"stderr: {stderr}"
-            )
+        self._config_squishserver("removeAppPath", [path])
 
     def addAttachableAut(self, aut: str, port: int, host="127.0.0.1") -> None:
         """Register an attachable AUT
@@ -128,16 +104,7 @@ class SquishServer:
                                     Defaults to "127.0.0.1".
         """
         log(f"Registering an attachable AUT {aut} on port: {port}")
-        (exitcode, stdout, stderr) = self._config_squishserver(
-            "addAttachableAUT", [aut, f"{host}:{port}"]
-        )
-        if exitcode != "0":
-            raise SquishserverError(
-                "Squishserver was not able to register an attachable AUT"
-                f"exitcode: {exitcode}"
-                f"stdout: {stdout}"
-                f"stderr: {stderr}"
-            )
+        self._config_squishserver("addAttachableAUT", [aut, f"{host}:{port}"])
 
     def removeAttachableAut(self, aut: str, port: int, host="127.0.0.1") -> None:
         """Register an attachable AUT
@@ -151,13 +118,4 @@ class SquishServer:
                                     Defaults to "127.0.0.1".
         """
         log(f"Removing registered attachable AUT {aut} on port: {port}")
-        (exitcode, stdout, stderr) = self._config_squishserver(
-            "removeAttachableAUT", [aut, f"{host}:{port}"]
-        )
-        if exitcode != "0":
-            raise SquishserverError(
-                "Squishserver was not able to remove the registered attachable AUT"
-                f"exitcode: {exitcode}"
-                f"stdout: {stdout}"
-                f"stderr: {stderr}"
-            )
+        self._config_squishserver("removeAttachableAUT", [aut, f"{host}:{port}"])
