@@ -50,6 +50,25 @@ class SquishServer:
                 f"stderr: {stderr}"
             )
 
+    def removeAUT(self, aut: str, path: str) -> None:
+        """Remove an registered AUT
+
+        Args:
+            aut (str): the name of the executable
+            path (str): path to the executable folder
+        """
+        cmd = ["squishserver", "--config", "removeAUT", aut, path]
+        cwd = self.location
+        log(f"Removing registered AUT {aut} with location: {path}")
+        (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
+        if exitcode != "0":
+            raise SquishserverError(
+                "Squishserver was not able to remove registered the AUT"
+                f"exit code: {exitcode}"
+                f"stdout: {stdout}"
+                f"stderr: {stderr}"
+            )
+
     def addAppPath(self, path: str) -> None:
         """Register an AUT path
 
@@ -59,6 +78,24 @@ class SquishServer:
         cmd = ["squishserver", "--config", "addAppPath", path]
         cwd = self.location
         log(f"Registering AUT path: {path}")
+        (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
+        if exitcode != "0":
+            raise SquishserverError(
+                "Squishserver was not able to register the AUT path"
+                f"exit code: {exitcode}"
+                f"stdout: {stdout}"
+                f"stderr: {stderr}"
+            )
+
+    def removeAppPath(self, path: str) -> None:
+        """Remove an registered AUT path
+
+        Args:
+            path (str): the path to the AUT
+        """
+        cmd = ["squishserver", "--config", "removeAppPath", path]
+        cwd = self.location
+        log(f"Removing registered AUT path: {path}")
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
         if exitcode != "0":
             raise SquishserverError(
@@ -92,6 +129,35 @@ class SquishServer:
         if exitcode != "0":
             raise SquishserverError(
                 "Squishserver was not able to register an attachable AUT"
+                f"exitcode: {exitcode}"
+                f"stdout: {stdout}"
+                f"stderr: {stderr}"
+            )
+
+    def removeAttachableAut(self, aut: str, port: int, host="127.0.0.1") -> None:
+        """Register an attachable AUT
+
+        Args:
+            aut (str): the name of the attachable AUT
+            port (int): port of the machine where the attachable AUT
+                        is supposed to be running.
+            host (str, optional):   host of the machine where the attachable AUT
+                                    is supposed to be running.
+                                    Defaults to "127.0.0.1".
+        """
+        cmd = [
+            "squishserver",
+            "--config",
+            "removeAttachableAUT",
+            aut,
+            host + ":" + str(port),
+        ]
+        cwd = self.location
+        log(f"Removing registered attachable AUT {aut} on port: {port}")
+        (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
+        if exitcode != "0":
+            raise SquishserverError(
+                "Squishserver was not able to remove the registered attachable AUT"
                 f"exitcode: {exitcode}"
                 f"stdout: {stdout}"
                 f"stderr: {stderr}"
