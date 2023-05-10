@@ -20,6 +20,6 @@ class SquishserverError(Exception):
     """
     Indicate that squishserver was unable to complete the operation.
     """
-    
+
     def __init__(self, message):
         super().__init__(message)
