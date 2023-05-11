@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
+from pathlib import Path
 
 from remotesystem import RemoteSystem
 
 from squape.internal.exceptions import SquishserverError
+from squape.report import debug
 from squape.report import log
 
 
@@ -32,11 +34,13 @@ class SquishServer:
             )
 
     def _config_squishserver(self, config_option: str, params=None, cwd=None):
-        """A helper function that contains general code for the squishserver congifuration
+        """Configures the squishserver by calling 'squishserver --config ...' command
 
         Args:
-            config_option (str): the config option to be used during configuration
+            config_option (str): the config option to be used during configuration.
             params (list, optional): the configuration parameters. Defaults to [].
+            cwd (str):  the path to the current working directory.
+                        Defaults to the "SQUISH_PREFIX" environment vairable.
         """
         if params is None:
             params = []
@@ -44,11 +48,16 @@ class SquishServer:
         if cwd is None:
             cwd = self.location
 
+        debug(
+            f"Executing command: squishserver --config {' '.join(params)}",
+            f"cwd: {cwd}",
+        )
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
         if exitcode != "0":
             raise SquishserverError(
                 "Squishserver was not able to perform "
                 f"{config_option} configuration operation"
+                f"\nParameters: {' '.join(params)}"
                 f"\nexit code: {exitcode}"
                 f"\nstdout: {stdout}"
                 f"\nstderr: {stderr}"
@@ -61,17 +70,17 @@ class SquishServer:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
-        log(f"Registering AUT {aut} with location: {path}")
+        log(f"Registering {Path(path)/aut} AUT")
         self._config_squishserver("addAUT", [aut, path])
 
     def removeAUT(self, aut: str, path: str) -> None:
-        """Remove an registered AUT
+        """Remove registered AUT
 
         Args:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
-        log(f"Removing registered AUT {aut} with location: {path}")
+        log(f"Removing registered {Path(path)/aut} AUT")
         self._config_squishserver("removeAUT", [aut, path])
 
     def addAppPath(self, path: str) -> None:
@@ -84,7 +93,7 @@ class SquishServer:
         self._config_squishserver("addAppPath", [path])
 
     def removeAppPath(self, path: str) -> None:
-        """Remove an registered AUT path
+        """Remove a registered AUT path
 
         Args:
             path (str): the path to the AUT
@@ -103,11 +112,11 @@ class SquishServer:
                                     is supposed to be running.
                                     Defaults to "127.0.0.1".
         """
-        log(f"Registering an attachable AUT {aut} on port: {port}")
+        log(f"Registering an attachable AUT {aut} ({host}:{port})")
         self._config_squishserver("addAttachableAUT", [aut, f"{host}:{port}"])
 
     def removeAttachableAut(self, aut: str, port: int, host="127.0.0.1") -> None:
-        """Register an attachable AUT
+        """Remove registered attachable AUT
 
         Args:
             aut (str): the name of the attachable AUT
@@ -117,5 +126,5 @@ class SquishServer:
                                     is supposed to be running.
                                     Defaults to "127.0.0.1".
         """
-        log(f"Removing registered attachable AUT {aut} on port: {port}")
+        log(f"Removing registered attachable AUT {aut} ({host}:{port})")
         self._config_squishserver("removeAttachableAUT", [aut, f"{host}:{port}"])
