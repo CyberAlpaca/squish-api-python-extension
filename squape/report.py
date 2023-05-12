@@ -27,23 +27,6 @@ class LogLevel:
     }
 
 
-def set_level(level) -> None:
-    """Sets the Squish logging level, Level must be an int or a str.
-
-    Args:
-        level (int|str): log level to set
-
-    Examples:
-       set_level(report.LogLevel.WARNING)
-       set_level("FAIL")
-    """
-    global LOGLEVEL
-    LOGLEVEL = __translate_Level(level)
-
-
-LOGLEVEL = set_level(LogLevel.LOG)
-
-
 def __translate_Level(level) -> int:
     """Translates the given log level to valid LogLevel
 
@@ -59,6 +42,23 @@ def __translate_Level(level) -> int:
     else:
         raise TypeError(f"LogLevel is not an integer or a valid string: {level}")
     return rv
+
+
+def set_level(level) -> None:
+    """Sets the Squish logging level, Level must be an int or a str.
+
+    Args:
+        level (int|str): log level to set
+
+    Examples:
+       set_level(report.LogLevel.WARNING)
+       set_level("FAIL")
+    """
+    global LOGLEVEL
+    LOGLEVEL = __translate_Level(level)
+
+
+LOGLEVEL = set_level(LogLevel.LOG)
 
 
 def __is_level_enabled(level: LogLevel) -> bool:
