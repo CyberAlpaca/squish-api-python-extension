@@ -23,6 +23,8 @@ class SquishServer:
         """
         if location is None:
             self.location = os.environ["SQUISH_PREFIX"]
+        else:
+            self.location = location
 
         self.host = host
         self.port = port
