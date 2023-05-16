@@ -4,6 +4,7 @@ from pathlib import Path
 
 from remotesystem import RemoteSystem
 
+from squape.internal.exceptions import EnvironmentError
 from squape.internal.exceptions import SquishserverError
 from squape.report import debug
 from squape.report import log
@@ -22,7 +23,13 @@ class SquishServer:
             port (int, optional): port of the squishserver. Defaults to 4322.
         """
         if location is None:
-            self.location = os.environ["SQUISH_PREFIX"]
+            try:
+                self.location = os.environ["SQUISH_PREFIX"]
+            except KeyError:
+                raise EnvironmentError(
+                    "The SQUISH_PREFIX variable is not set, "
+                    "and location of the squishserver is not specified!"
+                )
         else:
             self.location = location
 

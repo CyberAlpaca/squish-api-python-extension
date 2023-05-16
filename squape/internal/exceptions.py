@@ -23,3 +23,13 @@ class SquishserverError(Exception):
 
     def __init__(self, message):
         super().__init__(message)
+
+
+class EnvironmentError(Exception):
+    """
+    Indicate that the runtime environment is not set correctly.
+    Example would be unset environment variable.
+    """
+
+    def __init__(self, message):
+        super().__init__(message)
