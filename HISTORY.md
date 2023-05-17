@@ -1,3 +1,7 @@
+# 0.2.1 (2023-05-17)
+## Bugfixes
+- Fixed a bug with setting log level via `set_leve()`(#24)
+
 # 0.2.0 (2023-05-03)
 ## New Features
 - settings module - makes using various test settings easier and cleaner (#7)
