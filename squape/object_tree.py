@@ -4,7 +4,11 @@
 # All rights reserved.
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
+import math
+
 import object
+
+import squish
 
 
 def children(obj, selector: dict = None) -> tuple:
@@ -25,7 +29,7 @@ def children(obj, selector: dict = None) -> tuple:
     return tuple(filter(lambda x: _filter_by_selector(x, selector), children))
 
 
-def find(obj, selector: dict = None, _depth=0) -> tuple:
+def find(obj, selector: dict = None, max_depth=None, _depth=0) -> tuple:
     """Recursively filter all the underlaying children
     of the specified object  by the specified selector
 
@@ -38,17 +42,19 @@ def find(obj, selector: dict = None, _depth=0) -> tuple:
     Returns:
         tuple: the result of search among the object tree.
     """
+    if max_depth is None:
+        max_depth = math.inf
+    if _depth >= max_depth:
+        return []
     if selector is None:
         selector = {}
     children = list(object.children(obj))
+    children_count = len(children)
 
-    for child in children:
-        children.extend(
-            [
-                find(grandchild, _depth=_depth + 1)
-                for grandchild in object.children(child)
-            ]
-        )
+    for index, child in enumerate(children):
+        if index == children_count:
+            break
+        children.extend(find(child, max_depth=max_depth, _depth=_depth + 1))
 
     if _depth == 0:
         filtered_children = filter(lambda x: _filter_by_selector(x, selector), children)
@@ -101,7 +107,9 @@ def siblings(obj, selector: dict = None):
     if parent is None:
         return None
     else:
-        return tuple(filter(lambda x: _filter_by_selector(x, object.children(parent))))
+        siblings = list(object.children(parent))
+        siblings.remove(obj)
+        return tuple(filter(lambda x: _filter_by_selector(x, selector), siblings))
 
 
 def _filter_by_selector(obj, selector: dict) -> bool:
@@ -118,8 +126,11 @@ def _filter_by_selector(obj, selector: dict) -> bool:
     """
     if selector == {}:
         return True
-    else:
-        for key, expected_value in selector.items():
-            if not hasattr(obj, key) or getattr(obj, key) != expected_value:
+
+    for key, expected_value in selector.items():
+        if key == "type":
+            if squish.className(obj) != expected_value:
                 return False
-            return True
+        elif not hasattr(obj, key) or getattr(obj, key) != expected_value:
+            return False
+    return True
