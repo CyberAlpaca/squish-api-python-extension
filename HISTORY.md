@@ -1,6 +1,11 @@
+# 0.2.2 (2023-05-21)
+## Bugfixes
+- Fixed activating log level support for some Squish test functions (#27)
+- Fixed setting initial `LOGLEVEL` to 'LOG' (#29)
+
 # 0.2.1 (2023-05-17)
 ## Bugfixes
-- Fixed a bug with setting log level via `set_leve()`(#24)
+- Fixed a bug with setting log level via `set_level()`(#24)
 
 # 0.2.0 (2023-05-03)
 ## New Features
