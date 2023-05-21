@@ -60,6 +60,11 @@ def set_level(level) -> None:
 
 LOGLEVEL = set_level(LogLevel.LOG)
 
+_test_log = test.log
+_test_warning = test.warning
+_test_fail = test.fail
+_test_fatal = test.fatal
+
 
 def __is_level_enabled(level: LogLevel) -> bool:
     """Checks the given log level against the currently set LOGLEVEL
@@ -94,7 +99,7 @@ def debug(msg: str, details: str = "") -> None:
     if __is_level_enabled(LogLevel.DEBUG):
         test.fixateResultContext(1)
         try:
-            test.log(f"[DEBUG] {msg}", details)
+            _test_log(f"[DEBUG] {msg}", details)
         finally:
             test.restoreResultContext()
 
@@ -119,7 +124,7 @@ def log(msg: str, details: str = "") -> None:
     if __is_level_enabled(LogLevel.LOG):
         test.fixateResultContext(1)
         try:
-            test.log(msg, details)
+            _test_log(msg, details)
         finally:
             test.restoreResultContext()
 
@@ -145,7 +150,7 @@ def warning(msg: str, details: str = "") -> None:
     if __is_level_enabled(LogLevel.WARNING):
         test.fixateResultContext(1)
         try:
-            test.warning(msg, details)
+            _test_warning(msg, details)
         finally:
             test.restoreResultContext()
 
@@ -170,7 +175,7 @@ def fail(msg: str, details: str = "") -> None:
     if __is_level_enabled(LogLevel.FAIL):
         test.fixateResultContext(1)
         try:
-            test.fail(msg, details)
+            _test_fail(msg, details)
         finally:
             test.restoreResultContext()
 
@@ -199,7 +204,7 @@ def fatal(msg: str, details: str = "") -> None:
         test.fixateResultContext(1)
         try:
             squish.testSettings.throwOnFailure = True
-            test.fatal(msg, details)
+            _test_fatal(msg, details)
         finally:
             test.restoreResultContext()
 
