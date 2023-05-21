@@ -58,7 +58,7 @@ def set_level(level) -> None:
     LOGLEVEL = __translate_Level(level)
 
 
-LOGLEVEL = set_level(LogLevel.LOG)
+set_level(LogLevel.LOG)
 
 _test_log = test.log
 _test_warning = test.warning
