@@ -28,7 +28,7 @@ class SquishServer:
             except KeyError:
                 raise EnvironmentError(
                     "The SQUISH_PREFIX variable is not set, "
-                    "and location of the squishserver is not specified!"
+                    f"and location of the squishserver ({self.host}:{self.port}) is not specified!"
                 )
         else:
             self.location = location
@@ -64,7 +64,7 @@ class SquishServer:
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
         if exitcode != "0":
             raise SquishserverError(
-                "Squishserver was not able to perform "
+                f"Squishserver ({self.host}:{self.port}) was not able to perform "
                 f"{config_option} configuration operation"
                 f"\nParameters: {' '.join(params)}"
                 f"\nexit code: {exitcode}"
