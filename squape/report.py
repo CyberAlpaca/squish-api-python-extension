@@ -73,7 +73,7 @@ def __is_level_enabled(level: LogLevel) -> bool:
         level (LogLevel): log level to check
 
     Returns:
-        bool: True if level is higher then LOGLEVEL, False otherwise
+        bool: True if level is equal to or higher than LOGLEVEL, False otherwise
     """
     return LOGLEVEL <= level
 
