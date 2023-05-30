@@ -18,6 +18,7 @@ repos:
           --unclassifiable-application-module, squish, 
           --unclassifiable-application-module, test,
           --unclassifiable-application-module, squishinfo,
+          --unclassifiable-application-module, object,
         ]
  
   - repo: https://github.com/psf/black
