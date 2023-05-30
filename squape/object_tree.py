@@ -33,7 +33,7 @@ def children(object_name : any, selector: dict = None) -> tuple:
     return tuple(filter(lambda x: _filter_by_selector(x, selector), children))
 
 
-def find(object_name : any, selector: dict = None, max_depth=None, _depth=0) -> tuple:
+def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
     """Recursively filter all the underlaying children
     of the specified object  by the specified selector
 
@@ -54,7 +54,7 @@ def find(object_name : any, selector: dict = None, max_depth=None, _depth=0) -> 
     """
     if max_depth is None:
         max_depth = math.inf
-    if _depth >= max_depth:
+    if max_depth < 0:
         return []
     if selector is None:
         selector = {}
@@ -66,9 +66,9 @@ def find(object_name : any, selector: dict = None, max_depth=None, _depth=0) -> 
     for index, child in enumerate(children):
         if index == children_count:
             break
-        children.extend(find(child, max_depth=max_depth, _depth=_depth + 1))
+        children.extend(find(child, max_depth=max_depth-1))
 
-    if _depth == 0:
+    if max_depth == 0:
         filtered_children = filter(lambda x: _filter_by_selector(x, selector), children)
         return tuple(filtered_children)
     else:
