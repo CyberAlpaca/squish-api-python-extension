@@ -120,7 +120,7 @@ class SquishServer:
         log(f"Removing registered AUT path: {path}")
         self._config_squishserver("removeAppPath", [path])
 
-    def addAttachableAut(self, aut: str, port: int, host="127.0.0.1") -> None:
+    def addAttachableAut(self, aut: str, port: int, host : str ="127.0.0.1") -> None:
         """Register an attachable AUT
 
         Args:
@@ -134,7 +134,7 @@ class SquishServer:
         log(f"Registering an attachable AUT {aut} ({host}:{port})")
         self._config_squishserver("addAttachableAUT", [aut, f"{host}:{port}"])
 
-    def removeAttachableAut(self, aut: str, port: int, host="127.0.0.1") -> None:
+    def removeAttachableAut(self, aut: str, port: int, host : str ="127.0.0.1") -> None:
         """Remove registered attachable AUT
 
         Args:
