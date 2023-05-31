@@ -13,14 +13,14 @@ from squape.report import log
 class SquishServer:
     """Class to represent a local or remote squishserver"""
 
-    def __init__(self, location=None, host="127.0.0.1", port=4322):
+    def __init__(self, location=None, host=None, port=None):
         """Open an RemoteSystem connection to a machine with a running squishserver
 
         Args:
             location (_type_, optional):    location of the Squish package.
                                             Defaults to the "SQUISH_PREFIX".
-            host (str, optional): host of the squishserver. Defaults to "127.0.0.1".
-            port (int, optional): port of the squishserver. Defaults to 4322.
+            host (str, optional): host of the squishserver. Defaults to SQUISHRUNNER_HOST if it is defined, else "127.0.0.1".
+            port (int, optional): port of the squishserver. Defaults to SQUISHRUNNER_PORT if it is defined, else 4322.
         """
         if location is None:
             try:
@@ -33,8 +33,18 @@ class SquishServer:
         else:
             self.location = location
 
-        self.host = host
-        self.port = port
+        if host is None:
+            if "SQUISHRUNNER_HOST" in os.environ:
+                self.host = os.environ["SQUISHRUNNER_HOST"]
+            else:
+                self.host = "127.0.0.1"
+
+        if port is None:
+            if "SQUISHRUNNER_PORT" in os.environ:
+                self.port = os.environ["SQUISHRUNNER_PORT"]
+            else:
+                self.port = 4322
+
         try:
             self.remotesys = RemoteSystem(host, port)
         except Exception:
