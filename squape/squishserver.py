@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+import builtins
 import os
 from pathlib import Path
 
 from remotesystem import RemoteSystem
 
+import squish
 from squape.internal.exceptions import EnvironmentError
 from squape.internal.exceptions import SquishserverError
 from squape.report import debug
@@ -19,8 +21,12 @@ class SquishServer:
         Args:
             location (_type_, optional):    location of the Squish package.
                                             Defaults to the "SQUISH_PREFIX".
-            host (str, optional): host of the squishserver. Defaults to SQUISHRUNNER_HOST if it is defined, else "127.0.0.1".
-            port (int, optional): port of the squishserver. Defaults to SQUISHRUNNER_PORT if it is defined, else 4322.
+            host (str, optional): host of the squishserver.
+                                  Defaults to SQUISHRUNNER_HOST if it is defined,
+                                  else "127.0.0.1".
+            port (int, optional): port of the squishserver.
+                                  Defaults to SQUISHRUNNER_PORT if it is defined,
+                                  else 4322.
         """
         if location is None:
             try:
@@ -28,20 +34,18 @@ class SquishServer:
             except KeyError:
                 raise EnvironmentError(
                     "The SQUISH_PREFIX variable is not set, "
-                    f"and location of the squishserver ({self.host}:{self.port}) is not specified!"
+                    f"and location of the squishserver \
+                    ({self.host}:{self.port}) is not specified!"
                 )
         else:
             self.location = location
 
         if host is None:
-            if "SQUISHRUNNER_HOST" in os.environ:
-                self.host = os.environ["SQUISHRUNNER_HOST"]
-            else:
-                self.host = "127.0.0.1"
+            self.host = os.environ.get("SQUISHRUNNER_HOST", "127.0.0.1")
 
         if port is None:
             if "SQUISHRUNNER_PORT" in os.environ:
-                self.port = os.environ["SQUISHRUNNER_PORT"]
+                self.port = builtins.int(os.environ["SQUISHRUNNER_PORT"])
             else:
                 self.port = 4322
 
@@ -68,7 +72,8 @@ class SquishServer:
             cwd = self.location
 
         debug(
-            f"[{self.host}:{self.port}] Executing command: squishserver --config {' '.join(params)}",
+            f"[{self.host}:{self.port}] Executing command: squishserver --config\
+             {' '.join(params)}",
             f"cwd: {cwd}",
         )
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
@@ -120,7 +125,7 @@ class SquishServer:
         log(f"Removing registered AUT path: {path}")
         self._config_squishserver("removeAppPath", [path])
 
-    def addAttachableAut(self, aut: str, port: int, host : str ="127.0.0.1") -> None:
+    def addAttachableAut(self, aut: str, port: int, host: str = "127.0.0.1") -> None:
         """Register an attachable AUT
 
         Args:
@@ -134,7 +139,7 @@ class SquishServer:
         log(f"Registering an attachable AUT {aut} ({host}:{port})")
         self._config_squishserver("addAttachableAUT", [aut, f"{host}:{port}"])
 
-    def removeAttachableAut(self, aut: str, port: int, host : str ="127.0.0.1") -> None:
+    def removeAttachableAut(self, aut: str, port: int, host: str = "127.0.0.1") -> None:
         """Remove registered attachable AUT
 
         Args:
@@ -147,3 +152,27 @@ class SquishServer:
         """
         log(f"Removing registered attachable AUT {aut} ({host}:{port})")
         self._config_squishserver("removeAttachableAUT", [aut, f"{host}:{port}"])
+
+    def attachToApplication(self, aut):
+        """
+        Attaches to an application with given name.
+
+        Args:
+            aut (str): the name of the attachable AUT
+        Returns:
+            ctx : Application Context
+        """
+        ctx = squish.attachToApplication(aut, self.host, self.port)
+        return ctx
+
+    def startApplication(self, aut):
+        """
+        Starts to an application with given name.
+
+        Args:
+            aut (str): the name of the mapped AUT
+        Returns:
+            ctx : Application Context
+        """
+        ctx = squish.startApplication(aut, self.host, self.port)
+        return ctx
