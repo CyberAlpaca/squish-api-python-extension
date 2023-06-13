@@ -153,7 +153,7 @@ class SquishServer:
         log(f"Removing registered attachable AUT {aut} ({host}:{port})")
         self._config_squishserver("removeAttachableAUT", [aut, f"{host}:{port}"])
 
-    def attachToApplication(self, aut):
+    def attachToApplication(self, aut: str):
         """
         Attaches to an application with given name.
 
@@ -162,10 +162,11 @@ class SquishServer:
         Returns:
             ctx : Application Context
         """
+        log(f"Attach to application {aut} using squishserver {self.host}:{self.port}")
         ctx = squish.attachToApplication(aut, self.host, self.port)
         return ctx
 
-    def startApplication(self, aut):
+    def startApplication(self, aut: str):
         """
         Starts to an application with given name.
 
@@ -174,5 +175,6 @@ class SquishServer:
         Returns:
             ctx : Application Context
         """
+        log(f"Start an application {aut} using squishserver {self.host}:{self.port}")
         ctx = squish.startApplication(aut, self.host, self.port)
         return ctx
