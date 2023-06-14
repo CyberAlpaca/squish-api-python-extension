@@ -72,14 +72,16 @@ class SquishServer:
             cwd = self.location
 
         debug(
-            f"[{self.host}:{self.port}] Executing command: squishserver --config\
-             {' '.join(params)}",
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Executing command: squishserver --config "
+            f"{' '.join(params)}",
             f"cwd: {cwd}",
         )
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
         if exitcode != "0":
             raise SquishserverError(
-                f"Squishserver ({self.host}:{self.port}) was not able to perform "
+                f"[Squishserver {self.host}:{self.port}] "
+                f"was not able to perform "
                 f"{config_option} configuration operation"
                 f"\nParameters: {' '.join(params)}"
                 f"\nexit code: {exitcode}"
@@ -94,7 +96,10 @@ class SquishServer:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
-        log(f"Registering {Path(path)/aut} AUT")
+        log(
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Registering {Path(path)/aut} AUT"
+        )
         self._config_squishserver("addAUT", [aut, path])
 
     def removeAUT(self, aut: str, path: str) -> None:
@@ -104,7 +109,10 @@ class SquishServer:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
-        log(f"Removing registered {Path(path)/aut} AUT")
+        log(
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Removing registered {Path(path)/aut} AUT"
+        )
         self._config_squishserver("removeAUT", [aut, path])
 
     def addAppPath(self, path: str) -> None:
@@ -113,7 +121,7 @@ class SquishServer:
         Args:
             path (str): the AUT path to register
         """
-        log(f"Registering AUT path: {path}")
+        log(f"[Squishserver {self.host}:{self.port}] " f"Registering AUT path: {path}")
         self._config_squishserver("addAppPath", [path])
 
     def removeAppPath(self, path: str) -> None:
@@ -122,7 +130,10 @@ class SquishServer:
         Args:
             path (str): the path to the AUT
         """
-        log(f"Removing registered AUT path: {path}")
+        log(
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Removing registered AUT path: {path}"
+        )
         self._config_squishserver("removeAppPath", [path])
 
     def addAttachableAut(self, aut: str, port: int, host: str = "127.0.0.1") -> None:
@@ -136,7 +147,10 @@ class SquishServer:
                                     is supposed to be running.
                                     Defaults to "127.0.0.1".
         """
-        log(f"Registering an attachable AUT {aut} ({host}:{port})")
+        log(
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Registering an attachable AUT {aut}"
+        )
         self._config_squishserver("addAttachableAUT", [aut, f"{host}:{port}"])
 
     def removeAttachableAut(self, aut: str, port: int, host: str = "127.0.0.1") -> None:
@@ -150,7 +164,10 @@ class SquishServer:
                                     is supposed to be running.
                                     Defaults to "127.0.0.1".
         """
-        log(f"Removing registered attachable AUT {aut} ({host}:{port})")
+        log(
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Removing registered attachable AUT {aut}"
+        )
         self._config_squishserver("removeAttachableAUT", [aut, f"{host}:{port}"])
 
     def attachToApplication(self, aut: str):
@@ -162,7 +179,7 @@ class SquishServer:
         Returns:
             ctx : Application Context
         """
-        log(f"Attach to application {aut} using squishserver {self.host}:{self.port}")
+        log(f"[Squishserver {self.host}:{self.port}] " f"Attach to application {aut}")
         ctx = squish.attachToApplication(aut, self.host, self.port)
         return ctx
 
@@ -175,6 +192,6 @@ class SquishServer:
         Returns:
             ctx : Application Context
         """
-        log(f"Start an application {aut} using squishserver {self.host}:{self.port}")
+        log(f"[Squishserver {self.host}:{self.port}] " f"Start an application {aut}")
         ctx = squish.startApplication(aut, self.host, self.port)
         return ctx
