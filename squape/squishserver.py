@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import builtins
 import os
 from pathlib import Path
 
@@ -45,7 +44,7 @@ class SquishServer:
 
         if port is None:
             if "SQUISHRUNNER_PORT" in os.environ:
-                self.port = builtins.int(os.environ["SQUISHRUNNER_PORT"])
+                self.port = int(os.environ["SQUISHRUNNER_PORT"])
             else:
                 self.port = 4322
 
