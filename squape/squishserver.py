@@ -33,8 +33,8 @@ class SquishServer:
             except KeyError:
                 raise EnvironmentError(
                     "The SQUISH_PREFIX variable is not set, "
-                    f"and location of the squishserver \
-                    ({self.host}:{self.port}) is not specified!"
+                    "and location of the squishserver "
+                    f"({self.host}:{self.port}) is not specified!"
                 )
         else:
             self.location = location
@@ -72,7 +72,7 @@ class SquishServer:
 
         debug(
             f"[Squishserver {self.host}:{self.port}] "
-            f"Executing command: squishserver --config "
+            "Executing command: squishserver --config "
             f"{' '.join(params)}",
             f"cwd: {cwd}",
         )
@@ -80,7 +80,7 @@ class SquishServer:
         if exitcode != "0":
             raise SquishserverError(
                 f"[Squishserver {self.host}:{self.port}] "
-                f"was not able to perform "
+                "was not able to perform "
                 f"{config_option} configuration operation"
                 f"\nParameters: {' '.join(params)}"
                 f"\nexit code: {exitcode}"
