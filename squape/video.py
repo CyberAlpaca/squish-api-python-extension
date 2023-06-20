@@ -98,9 +98,9 @@ def video_capture(message: str = "", remove_on_success: bool = False) -> None:
         remove_on_success (bool): Whether to replace captured video
         when there were no failures. Defaulting to False.
 
-    Example:
-        with video_capture(remove_on_success=True):
-            # code with actions and verifications
+    Examples:
+        >>> with video_capture(remove_on_success=True):
+        >>>     # code with actions and verifications
 
     """
 

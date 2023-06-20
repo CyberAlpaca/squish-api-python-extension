@@ -55,8 +55,8 @@ def set_level(level) -> None:
         level (int|str): log level to set
 
     Examples:
-       set_level(report.LogLevel.WARNING)
-       set_level("FAIL")
+       >>> set_level(report.LogLevel.WARNING)
+       >>> set_level("FAIL")
     """
     global LOGLEVEL
     LOGLEVEL = __translate_Level(level)
@@ -255,9 +255,9 @@ def section(title: str, description: str = "") -> None:
         title (str): Section title
         description (str): Optional additional description of the section
     Examples:
-        with section("Add new person"):
-            squish.type(squish.waitForObject(names.forename_edit), "Bob")
-            squish.mouseClick(squish.waitForObject(names.ok_button))
+        >>> with section("Add new person"):
+        >>>     squish.type(squish.waitForObject(names.forename_edit), "Bob")
+        >>>     squish.mouseClick(squish.waitForObject(names.ok_button))
     """
 
     test.fixateResultContext(1)
