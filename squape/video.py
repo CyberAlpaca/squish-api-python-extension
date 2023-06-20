@@ -115,7 +115,6 @@ def video_capture(message: str = "", remove_on_success: bool = False) -> None:
     except Exception:
         raise
     finally:
-
         test.stopVideoCapture(message)
 
         if remove_on_success:

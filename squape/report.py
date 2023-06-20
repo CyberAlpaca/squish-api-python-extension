@@ -4,9 +4,14 @@
 # All rights reserved.
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
+import os
 from contextlib import contextmanager
 
-import squish
+if "SQUISHRUNNER_HOST" in os.environ and "SQUISHRUNNER_PORT" in os.environ:
+    import squish
+else:
+    import squishtest as squish
+
 import test
 
 
