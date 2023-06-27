@@ -5,12 +5,11 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 import operator
-import os
 import time
 
-if "SQUISHRUNNER_HOST" in os.environ and "SQUISHRUNNER_PORT" in os.environ:
-    import squish
-else:
+try:  
+    import squish  
+except ImportError:  
     import squishtest as squish
 
 import test

@@ -2,12 +2,10 @@
 import os
 from pathlib import Path
 
-if "SQUISHRUNNER_HOST" in os.environ and "SQUISHRUNNER_PORT" in os.environ:
-    import squish
-else:
+try:  
+    import squish  
+except ImportError:  
     import squishtest as squish
-
-from remotesystem import RemoteSystem
 
 from squape.internal.exceptions import EnvironmentError, SquishserverError
 from squape.report import debug, log
