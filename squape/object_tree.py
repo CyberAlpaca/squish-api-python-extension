@@ -23,7 +23,7 @@ def children(object_name : any, selector: dict = None) -> tuple:
         tuple: children objects that met the selector criteria
 
     Examples:
-        children(object_name, {'type' : Button, 'visible' : True})
+        >>> children(object_name, {'type' : Button, 'visible' : True})
     """
     if selector is None:
         selector = {}
@@ -46,10 +46,12 @@ def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
         tuple: the result of search among the object tree.
 
     Examples:
+        ```
         find(object)
         find(object, {'type' : ToolBar})
         find(object, max_depth=5)
         find(object, {'visible' : True}, max_depth=3)
+        ```
     """
     if max_depth is None:
         max_depth = math.inf
@@ -89,7 +91,7 @@ def find_parent(object_name : any, selector: dict = None):
         None if such a parent does not exist.
 
     Examples:
-        find_parent(object_name : any, {'type' : 'MyContainerType'})
+        >>> find_parent(object_name : any, {'type' : 'MyContainerType'})
     """
     if selector is None:
         selector = {}
@@ -119,8 +121,10 @@ def siblings(object_name : any, selector: dict = None):
         tuple: the result of search among the object tree.
 
     Examples:
+        ```
         siblings(object)
         siblings(object, {'enabled' : True})
+        ```
     """
     if selector is None:
         selector = {}
