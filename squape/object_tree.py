@@ -6,8 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 import math
 
+try:
+    import squish
+except ImportError:
+    import squishtest as squish
+
 import object
-import squish
 
 
 def children(object_name: any, selector: dict = None) -> tuple:
