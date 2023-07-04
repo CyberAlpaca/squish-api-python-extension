@@ -32,15 +32,18 @@ def children(object_name: any, selector: dict = None) -> tuple:
     return tuple(filter(lambda x: _is_matching(x, selector), children))
 
 
-def find(object_name: any, selector: dict = None, max_depth=None) -> tuple:
-    """Recursively filter all the underlaying children
-    of the specified object  by the specified selector
+def find(object_name: any, selector: dict = None, max_depth: int = None) -> tuple:
+    """Recursively filter all the children of the specified object
+    by the specified selector
 
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
+        max_depth (int): defines maximum depth in the object structure that should be
+        while looking for children.
+        Defaults to None, which mean there is no depth limit.
 
     Returns:
         tuple: the result of search among the object tree.
@@ -55,25 +58,20 @@ def find(object_name: any, selector: dict = None, max_depth=None) -> tuple:
     """
     if max_depth is None:
         max_depth = math.inf
-    if max_depth < 0:
-        return []
+    if max_depth <= 0:
+        return ()
     if selector is None:
         selector = {}
 
     object_reference = _get_object_reference(object_name)
-    children = list(object.children(object_reference))
-    children_count = len(children)
+    children = ()
 
-    for index, child in enumerate(children):
-        if index == children_count:
-            break
-        children.extend(find(child, max_depth=max_depth - 1))
+    for child in object.children(object_reference):
+        if _is_matching(child, selector):
+            children += (child,)
+        children += find(child, selector, max_depth - 1)
 
-    if max_depth == 0:
-        filtered_children = filter(lambda x: _is_matching(x, selector), children)
-        return tuple(filtered_children)
-    else:
-        return children
+    return children
 
 
 def find_ancestor(object_name: any, selector: dict = None):
@@ -96,14 +94,15 @@ def find_ancestor(object_name: any, selector: dict = None):
         selector = {}
 
     object_reference = _get_object_reference(object_name)
+    parent = object.parent(object_reference)
 
-    if object.parent(object_reference) is None:
+    if parent is None:
         return None
 
     if _is_matching(object.parent(object_reference), selector):
-        return object.parent(object_reference)
+        return parent
 
-    return find_ancestor(object.parent(object_reference), selector)
+    return find_ancestor(parent, selector)
 
 
 def siblings(object_name: any, selector: dict = None):
