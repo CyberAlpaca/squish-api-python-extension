@@ -6,11 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 import math
 
-import squish
 import object
+import squish
 
 
-def children(object_name : any, selector: dict = None) -> tuple:
+def children(object_name: any, selector: dict = None) -> tuple:
     """Filter the direct children of the specified object by the specified selector
 
     Args:
@@ -29,10 +29,10 @@ def children(object_name : any, selector: dict = None) -> tuple:
         selector = {}
     object_reference = _get_object_reference(object_name)
     children = object.children(object_reference)
-    return tuple(filter(lambda x: _is_matches_selector(x, selector), children))
+    return tuple(filter(lambda x: _is_matching(x, selector), children))
 
 
-def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
+def find(object_name: any, selector: dict = None, max_depth=None) -> tuple:
     """Recursively filter all the underlaying children
     of the specified object  by the specified selector
 
@@ -59,7 +59,7 @@ def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
         return []
     if selector is None:
         selector = {}
-    
+
     object_reference = _get_object_reference(object_name)
     children = list(object.children(object_reference))
     children_count = len(children)
@@ -67,31 +67,30 @@ def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
     for index, child in enumerate(children):
         if index == children_count:
             break
-        children.extend(find(child, max_depth=max_depth-1))
+        children.extend(find(child, max_depth=max_depth - 1))
 
     if max_depth == 0:
-        filtered_children = filter(lambda x: _is_matches_selector(x, selector), children)
+        filtered_children = filter(lambda x: _is_matching(x, selector), children)
         return tuple(filtered_children)
     else:
         return children
 
 
-def find_parent(object_name : any, selector: dict = None):
-    """Find the first parent that matches the selector,
-    among all the parent objects up to the root.
+def find_ancestor(object_name: any, selector: dict = None):
+    """Find the first object's ancestor that matches the selector.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference to the parent
+        object_name (any): symbolic name, real name, or object reference to the ancestor
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
-        Squish object / None: The parent object that matches the selector.
-        None if such a parent does not exist.
+        Squish object / None: The ancestor object that matches the selector.
+        None if such an ancestor does not exist.
 
     Examples:
-        >>> find_parent(object_name : any, {'type' : 'MyContainerType'})
+        >>> find_ancestor(object_name : any, {'type' : 'MyContainerType'})
     """
     if selector is None:
         selector = {}
@@ -100,14 +99,14 @@ def find_parent(object_name : any, selector: dict = None):
 
     if object.parent(object_reference) is None:
         return None
-    
-    if _is_matches_selector(object.parent(object_reference), selector):
+
+    if _is_matching(object.parent(object_reference), selector):
         return object.parent(object_reference)
-        
-    return find_parent(object.parent(object_reference), selector)
+
+    return find_ancestor(object.parent(object_reference), selector)
 
 
-def siblings(object_name : any, selector: dict = None):
+def siblings(object_name: any, selector: dict = None):
     """Find all the siblings (direct children of the parent) objects
     for a given object, that match the selector.
 
@@ -136,11 +135,11 @@ def siblings(object_name : any, selector: dict = None):
     else:
         siblings = list(object.children(parent))
         siblings.remove(object_reference)
-        return tuple(filter(lambda x: _is_matches_selector(x, selector), siblings))
+        return tuple(filter(lambda x: _is_matching(x, selector), siblings))
 
 
-def _is_matches_selector(object_name : any, selector: dict) -> bool:
-    """Verifies if the given object properties match with the given selector.
+def _is_matching(object_name: any, selector: dict) -> bool:
+    """Checks if the properties of the given object match the provided selector.
 
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent
@@ -149,7 +148,7 @@ def _is_matches_selector(object_name : any, selector: dict) -> bool:
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
-        bool: True if object passes the verification, False otherwise.
+        bool: True if object matches selector, False otherwise.
     """
     if selector == {}:
         return True
@@ -160,15 +159,19 @@ def _is_matches_selector(object_name : any, selector: dict) -> bool:
         if key == "type":
             if squish.className(object_reference) != expected_value:
                 return False
-        elif not hasattr(object_reference, key) or getattr(object_reference, key) != expected_value:
+        elif (
+            not hasattr(object_reference, key)
+            or getattr(object_reference, key) != expected_value
+        ):
             return False
     return True
+
 
 def _get_object_reference(object_name: any) -> any:
     """Get the object reference for the given symbolic, real names or object reference
 
     Args:
-        object_name (any): symbolic name, real name, or object reference 
+        object_name (any): symbolic name, real name, or object reference
 
     Returns:
         object_reference: Object reference from the given object_name
