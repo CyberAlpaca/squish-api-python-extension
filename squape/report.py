@@ -6,7 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
 
-import squish
+try:  
+    import squish  
+except ImportError:  
+    import squishtest as squish
+
 import test
 
 

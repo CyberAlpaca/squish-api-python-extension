@@ -7,7 +7,11 @@
 import operator
 import time
 
-import squish
+try:  
+    import squish  
+except ImportError:  
+    import squishtest as squish
+
 import test
 
 
