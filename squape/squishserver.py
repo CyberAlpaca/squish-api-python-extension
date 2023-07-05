@@ -178,7 +178,7 @@ class SquishServer:
         Args:
             aut (str): the name of the attachable AUT
         Returns:
-            ctx : Application Context
+            (ApplicationContext): application context
         """
         log(f"[Squishserver {self.host}:{self.port}] " f"Attach to application {aut}")
         ctx = squish.attachToApplication(aut, self.host, self.port)
@@ -191,7 +191,7 @@ class SquishServer:
         Args:
             aut (str): the name of the mapped AUT
         Returns:
-            ctx : Application Context
+            (ApplicationContext): application context
         """
         log(f"[Squishserver {self.host}:{self.port}] " f"Start an application {aut}")
         ctx = squish.startApplication(aut, self.host, self.port)

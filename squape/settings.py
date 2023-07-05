@@ -6,9 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
 
-try:  
-    import squish  
-except ImportError:  
+try:
+    import squish
+except ImportError:
     import squishtest as squish
 
 from squape.internal.exceptions import SquishCapabilityError
@@ -60,8 +60,10 @@ def logScreenshotOnPass(enabled: bool = True) -> None:
         of screenshots on PASS test result. Defaulting to True.
 
     Examples:
-        >>> with logScreenshotOnPass():
-        >>>     # code with verifications
+        ```python
+        with logScreenshotOnPass():
+            # code with verifications
+        ```
     """
     with _ctx_settings("logScreenshotOnPass", enabled):
         yield
@@ -77,8 +79,10 @@ def logScreenshotOnFail(enabled: bool = True) -> None:
         of screenshots on FAIL test result. Defaulting to True.
 
     Examples:
-        >>> with logScreenshotOnFail():
-        >>>     # code with verifications
+        ```python
+        with logScreenshotOnFail():
+            # code with verifications
+        ```
     """
 
     with _ctx_settings("logScreenshotOnFail", enabled):
@@ -90,13 +94,15 @@ def logScreenshotOnWarning(enabled: bool = True) -> None:
     """Allows using logScreenshotOnWarning test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-logscreenshotonwarning
 
-     Args:
+    Args:
         enabled (bool): A boolean value indicating whether to enable logging
         of screenshots on warning log entry. Defaulting to True.
 
     Examples:
-        >>> with logScreenshotOnWarning():
-        >>>     # code where warning messages might happen
+        ```python
+        with logScreenshotOnWarning():
+            # code where warning messages might happen
+        ```
     """
     with _ctx_settings("logScreenshotOnWarning", enabled):
         yield
@@ -111,8 +117,10 @@ def silentVerifications(enabled: bool = True) -> None:
         enabled (bool): Whether silent verifications are enabled. Defaulting to True
 
     Examples:
-        >>> with silentVerifications():
-        >>>     # code with test.vp statements
+        ```python
+        with silentVerifications():
+            # code with test.vp statements
+        ```
     """
     with _ctx_settings("silentVerifications", enabled):
         yield
@@ -128,9 +136,10 @@ def imageSearchTolerant(enabled: bool = True) -> None:
         Defaulting to True.
 
     Examples:
-        >>> with imageSearchTolerant(), imageSearchThreshold(95):
-        >>>     test.imagePresent()
-
+        ```python
+        with imageSearchTolerant(), imageSearchThreshold(95):
+            test.imagePresent()
+        ```
     """
     with _ctx_settings("imageSearchTolerant", enabled):
         yield
@@ -145,8 +154,10 @@ def imageSearchThreshold(threshold: float) -> None:
         threshold (float): the threshold for image search.
 
     Examples:
-        >>> with imageSearchTolerant(), imageSearchThreshold(95):
-        >>>     test.imagePresent("image.png")
+        ```python
+        with imageSearchTolerant(), imageSearchThreshold(95):
+            test.imagePresent("image.png")
+        ```
     """
     with _ctx_settings("imageSearchThreshold", threshold):
         yield
@@ -161,10 +172,11 @@ def imageSearchMultiscale(enabled: bool = True) -> None:
         enabled (bool): Whether multi-scale image search is enabled. Defaulting to True
 
     Examples:
-        >>> with imageSearchMultiscale(), imageSearchMaxScale(150):
-        >>>     test.imagePresent("image1.png")
-        >>>     test.imagePresent("image2.png")
-
+        ```python
+        with imageSearchMultiscale(), imageSearchMaxScale(150):
+            test.imagePresent("image1.png")
+            test.imagePresent("image2.png")
+        ```
     """
     with _ctx_settings("imageSearchMultiscale", enabled):
         yield
@@ -179,9 +191,11 @@ def imageSearchMinScale(min_scale: float) -> None:
         min_scale (float): A float value indicating the minimum scale for image search.
 
     Examples:
-        >>> with imageSearchMultiscale(), imageSearchMinScale(75):
-        >>>     test.imagePresent("image1.png")
-        >>>     test.imagePresent("image2.png")
+        ```python
+        with imageSearchMultiscale(), imageSearchMinScale(75):
+            test.imagePresent("image1.png")
+            test.imagePresent("image2.png")
+        ```
     """
     with _ctx_settings("imageSearchMinScale", min_scale):
         yield
@@ -196,9 +210,11 @@ def imageSearchMaxScale(max_scale: float) -> None:
         max_scale (float): A float value indicating the maximum scale for image search.
 
     Examples:
-        >>> with imageSearchMultiscale(), imageSearchMaxScale(150):
-        >>>     test.imagePresent("image1.png")
-        >>>     test.imagePresent("image2.png")
+        ```python
+        with imageSearchMultiscale(), imageSearchMaxScale(150):
+            test.imagePresent("image1.png")
+            test.imagePresent("image2.png")
+        ```
     """
     with _ctx_settings("imageSearchMaxScale", max_scale):
         yield
@@ -213,9 +229,11 @@ def waitForObjectTimeout(timeout_ms: int) -> None:
         timeout_ms (int): A integer value indicating the timeout in ms.
 
     Examples:
-        >>> with waitForObjectTimeout(500):
-        >>>     waitForObject(names.obj1)
-        >>>     waitForObject(names.obj2)
+        ```python
+        with waitForObjectTimeout(500):
+            waitForObject(names.obj1)
+            waitForObject(names.obj2)
+        ```
     """
     with _ctx_settings("waitForObjectTimeout", timeout_ms):
         yield
@@ -230,9 +248,11 @@ def objectNotFoundDebugging(enabled: bool) -> None:
         enabled (bool): Whether to enable debugging when object is not found.
 
     Examples:
-        >>> with objectNotFoundDebugging(False):
-        >>>     waitForObject(names.obj1)
-        >>>     waitForObject(names.obj2)
+        ```python
+        with objectNotFoundDebugging(False):
+            waitForObject(names.obj1)
+            waitForObject(names.obj2)
+        ```
     """
     with _ctx_settings("objectNotFoundDebugging", enabled):
         yield
@@ -247,9 +267,11 @@ def imageNotFoundDebugging(enabled: bool) -> None:
         enabled (bool): Whether to enable debugging when image is not found.
 
     Examples:
-        >>> with imageNotFoundDebugging(False):
-        >>>     waitForImage("image1.png")
-        >>>     waitForImage("image2.png")
+        ```python
+        with imageNotFoundDebugging(False):
+            waitForImage("image1.png")
+            waitForImage("image2.png")
+        ```
     """
     with _ctx_settings("imageNotFoundDebugging", enabled):
         yield
@@ -264,9 +286,11 @@ def textNotFoundDebugging(enabled: bool) -> None:
         enabled (bool): Whether to enable debugging when a OCR Text is not found.
 
     Examples:
-        >>> with textNotFoundDebugging(False):
-        >>>     waitForOcrText("Frog")
-        >>>     waitForOcrText("Alpaca")
+        ```python
+        with textNotFoundDebugging(False):
+            waitForOcrText("Frog")
+            waitForOcrText("Alpaca")
+        ```
     """
     with _ctx_settings("textNotFoundDebugging", enabled):
         yield
@@ -282,9 +306,11 @@ def defaultOcrLanguage(language: str) -> None:
         for OCR Text search
 
     Examples:
-        >>> with defaultOcrLanguage("Polish"):
-        >>>     waitForOcrText("Dom")
-        >>>     waitForOcrText("Miasto")
+        ```python
+        with defaultOcrLanguage("Polish"):
+            waitForOcrText("Dom")
+            waitForOcrText("Miasto")
+        ```
     """
     with _ctx_settings("defaultOcrLanguage", language):
         yield
@@ -300,8 +326,10 @@ def breakOnFailure(enabled: bool = True) -> None:
         on every failed verification
 
     Examples:
-        >>> with breakOnFailure():
-        >>>     # code with verifications
+        ```python
+        with breakOnFailure():
+            # code with verifications
+        ```
     """
     with _ctx_settings("breakOnFailure", enabled):
         yield
@@ -317,9 +345,10 @@ def throwOnFailure(enabled: bool) -> None:
         on every failed verification
 
     Examples:
-        >>> with throwOnFailure():
-        >>>     # code with verifications
-
+        ```python
+        with throwOnFailure():
+            # code with verifications
+        ```
     """
     with _ctx_settings("throwOnFailure", enabled):
         yield
@@ -335,9 +364,10 @@ def retryDuration(duration_ms: int) -> None:
         the verification fails
 
     Examples:
-        >>> with retryDuration(5000):
-        >>>     test.vp("VP1")
-
+        ```python
+        with retryDuration(5000):
+            test.vp("VP1")
+        ```
     """
     with _ctx_settings("retryDuration", duration_ms):
         yield

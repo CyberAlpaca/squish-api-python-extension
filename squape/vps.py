@@ -7,9 +7,9 @@
 import operator
 import time
 
-try:  
-    import squish  
-except ImportError:  
+try:
+    import squish
+except ImportError:
     import squishtest as squish
 
 import test
@@ -28,7 +28,7 @@ def vph_property(
         expected_value (any): expected value of the verified property
         msg (str): verification message
     Returns:
-        bool: True if verification is positive, False otherwise
+        True if verification is positive, False otherwise
     """
 
     obj = squish.waitForObjectExists(object_name)
