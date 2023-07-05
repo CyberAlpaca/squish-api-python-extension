@@ -2,13 +2,15 @@
 import os
 from pathlib import Path
 
-try:  
-    import squish  
-except ImportError:  
+try:
+    import squish
+except ImportError:
     import squishtest as squish
+from remotesystem import RemoteSystem
 
-from squape.internal.exceptions import EnvironmentError, SquishserverError
-from squape.report import debug, log
+from internal.exceptions import EnvironmentError
+from internal.exceptions import SquishserverError
+from report import debug, log
 
 
 class SquishServer:
