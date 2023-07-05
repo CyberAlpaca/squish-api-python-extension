@@ -160,7 +160,8 @@ def _is_matching(object_name: any, selector: dict) -> bool:
 
     for key, expected_value in selector.items():
         if key == "type":
-            if squish.className(object_reference) != expected_value:
+            actual_type = squish.className(object_reference).rsplit("_QMLTYPE_", 1)[0]
+            if actual_type != expected_value:
                 return False
         elif (
             not hasattr(object_reference, key)
