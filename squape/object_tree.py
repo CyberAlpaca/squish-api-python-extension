@@ -53,9 +53,9 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
         tuple: the result of search among the object tree.
 
     Examples:
-        ```
+        ```python
         find(object)
-        find(object, {'type' : ToolBar})
+        find(object, {'type' : 'ToolBar'})
         find(object, max_depth=5)
         find(object, {'visible' : True}, max_depth=3)
         ```
