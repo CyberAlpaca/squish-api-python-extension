@@ -20,7 +20,7 @@ def _failure_results_count() -> int:
     all the counts for errors, fatals, xpasses and fails.
 
     Returns:
-        int: The total number of failures in test results.
+        The total number of failures in test results.
     """
     return (
         test.resultCount("errors")
@@ -36,7 +36,7 @@ def _videos_set() -> set:
     RESULT_DIR/TEST_SUITE_NAME/TEST_CASE_NAME/attachments.
 
     Returns:
-        set: The set of filenames with mp4 extension
+        The set of filenames with mp4 extension
     """
     video_dir = os.path.join(
         squishinfo.resultDir,
@@ -98,10 +98,11 @@ def video_capture(message: str = "", remove_on_success: bool = False) -> None:
         remove_on_success (bool): Whether to replace captured video
         when there were no failures. Defaulting to False.
 
-    Example:
+    Examples:
+        ```python
         with video_capture(remove_on_success=True):
             # code with actions and verifications
-
+        ```
     """
 
     if remove_on_success:

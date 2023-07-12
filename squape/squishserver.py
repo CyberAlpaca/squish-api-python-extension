@@ -2,13 +2,15 @@
 import os
 from pathlib import Path
 
-try:  
-    import squish  
-except ImportError:  
+try:
+    import squish
+except ImportError:
     import squishtest as squish
+from remotesystem import RemoteSystem
 
-from squape.internal.exceptions import EnvironmentError, SquishserverError
-from squape.report import debug, log
+from internal.exceptions import EnvironmentError
+from internal.exceptions import SquishserverError
+from report import debug, log
 
 
 class SquishServer:
@@ -176,7 +178,7 @@ class SquishServer:
         Args:
             aut (str): the name of the attachable AUT
         Returns:
-            ctx : Application Context
+            (ApplicationContext): application context
         """
         log(f"[Squishserver {self.host}:{self.port}] " f"Attach to application {aut}")
         ctx = squish.attachToApplication(aut, self.host, self.port)
@@ -189,7 +191,7 @@ class SquishServer:
         Args:
             aut (str): the name of the mapped AUT
         Returns:
-            ctx : Application Context
+            (ApplicationContext): application context
         """
         log(f"[Squishserver {self.host}:{self.port}] " f"Start an application {aut}")
         ctx = squish.startApplication(aut, self.host, self.port)

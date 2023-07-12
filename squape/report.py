@@ -6,9 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
 
-try:  
-    import squish  
-except ImportError:  
+try:
+    import squish
+except ImportError:
     import squishtest as squish
 
 import test
@@ -55,8 +55,8 @@ def set_level(level) -> None:
         level (int|str): log level to set
 
     Examples:
-       set_level(report.LogLevel.WARNING)
-       set_level("FAIL")
+       >>> set_level(report.LogLevel.WARNING)
+       >>> set_level("FAIL")
     """
     global LOGLEVEL
     LOGLEVEL = __translate_Level(level)
@@ -94,8 +94,8 @@ def debug(msg: str, details: str = "") -> None:
     Otherwise, it will be ignored and not included in the test report.
 
     Args:
-    - msg (str): The message to include in the log entry.
-    - details (str): Optional additional details to include in the log entry.
+        msg (str): The message to include in the log entry.
+        details (str): Optional additional details to include in the log entry.
 
     Returns:
         None
@@ -119,8 +119,8 @@ def log(msg: str, details: str = "") -> None:
     Otherwise, it will be ignored and not included in the test report.
 
     Args:
-    - msg (str): The message to include in the log entry.
-    - details (str): Optional additional details to include in the log entry.
+        msg (str): The message to include in the log entry.
+        details (str): Optional additional details to include in the log entry.
 
     Returns:
         None
@@ -145,8 +145,8 @@ def warning(msg: str, details: str = "") -> None:
     Otherwise, it will be ignored and not included in the test report.
 
     Args:
-    - msg (str): The message to include in the warning entry.
-    - details (str): Optional additional details to include in the warning entry.
+        msg (str): The message to include in the warning entry.
+        details (str): Optional additional details to include in the warning entry.
 
     Returns:
         None
@@ -170,8 +170,8 @@ def fail(msg: str, details: str = "") -> None:
     Otherwise, it will be ignored and not included in the test report.
 
     Args:
-    - msg (str): The message to include in the fail entry.
-    - details (str): Optional additional details to include in the fail entry.
+        msg (str): The message to include in the fail entry.
+        details (str): Optional additional details to include in the fail entry.
 
     Returns:
         None
@@ -198,8 +198,8 @@ def fatal(msg: str, details: str = "") -> None:
     After adding the fatal message, the function aborts the test case execution.
 
     Args:
-    - msg (str): The message to include in the fatal entry.
-    - details (str): Optional additional details to include in the fatal entry.
+        msg (str): The message to include in the fatal entry.
+        details (str): Optional additional details to include in the fatal entry.
 
     Returns:
         None
@@ -213,7 +213,7 @@ def fatal(msg: str, details: str = "") -> None:
             test.restoreResultContext()
 
 
-def enable_loglevel_in_test_module():
+def enable_loglevel_in_test_module() -> None:
     """Adds support for log levels to the Squish 'test' module.
 
     DISCLAIMER: This function uses monkeypathching
@@ -255,9 +255,11 @@ def section(title: str, description: str = "") -> None:
         title (str): Section title
         description (str): Optional additional description of the section
     Examples:
+        ```python
         with section("Add new person"):
             squish.type(squish.waitForObject(names.forename_edit), "Bob")
             squish.mouseClick(squish.waitForObject(names.ok_button))
+        ```
     """
 
     test.fixateResultContext(1)
