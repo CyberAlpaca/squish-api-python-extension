@@ -63,7 +63,7 @@ def _replace_videos(videos: set) -> None:
 
     Args:
         videos (set): A set of video names to replace.
-        Does nothing when the set is empty.
+            Does nothing when the set is empty.
     """
 
     if not len(videos):
@@ -93,13 +93,13 @@ def video_capture(message: str = "", remove_on_success: bool = False) -> None:
     with a tiny placeholder video to save test results size.
 
     !!! warning
-        Removing videos on success does not work with Squish 7.1.1 and below 
-        when execution is triggered outside the Squish IDE. 
+        Removing videos on success does not work with Squish 7.1.1 and below
+        when execution is triggered outside the Squish IDE.
     Args:
         message (str): log a video n the test report using the specified message.
-        Defaulting to empty string.
+            Defaulting to empty string.
         remove_on_success (bool): Whether to replace captured video
-        when there were no failures. Defaulting to False.
+            when there were no failures. Defaulting to False.
 
     Examples:
         ```python
@@ -133,8 +133,8 @@ def remove_videos_on_success() -> None:
     Remove all captured videos when the execution was successful (no failures)
 
     !!! warning
-        Removing videos on success does not work with Squish 7.1.1 and below 
-        when execution is triggered outside the Squish IDE. 
+        Removing videos on success does not work with Squish 7.1.1 and below
+        when execution is triggered outside the Squish IDE.
     """
     if _failure_results_count() == 0:
         videos_to_remove = _videos_set()
