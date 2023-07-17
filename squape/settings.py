@@ -263,7 +263,7 @@ def imageNotFoundDebugging(enabled: bool) -> None:
     """Allows using imageNotFoundDebugging test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-imagenotfounddebugging
 
-     Args:
+    Args:
         enabled (bool): Whether to enable debugging when image is not found.
 
     Examples:
