@@ -1,0 +1,48 @@
+site_name: SQUAPE - Squish API Python Extension
+
+repo_name: CyberAlpaca/squish-api-python-extension
+repo_url: https://github.com/CyberAlpaca/squish-api-python-extension
+
+theme:
+  name: "material"
+  logo: assets/favicon.ico
+  favicon: assets/favicon.ico
+  features:
+    
+    - content.tabs.link
+    - content.code.annotate
+    - announce.dismiss
+    - navigation.tabs
+  palette:
+    primary: white
+    accent: deep purple
+
+nav:
+- Squape: index.md
+- Code Reference:
+  - 'squape.report': reference/report.md
+  - 'squape.settings': reference/settings.md
+  - 'squape.squishserver': reference/squishserver.md
+  - 'squape.video': reference/video.md
+  - 'squape.vps': reference/vps.md
+- Squape @ PyPI: https://pypi.org/project/squape/
+- Cyber Alpaca: https://cyberalpaca.com
+
+plugins:
+  - search
+  - section-index
+    
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [.]
+          options:
+            separate_signature: true
+            filters: ["!^_"]
+            docstring_options:
+              ignore_init_summary: true
+            merge_init_into_class: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.magiclink
