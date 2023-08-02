@@ -5,6 +5,7 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 import math
+import types
 
 try:
     import squish
@@ -20,7 +21,10 @@ def children(object_name: any, selector: dict = None) -> tuple:
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent
         selector (dict, optional): The selector is a dictionary of properties,
-        that must match for objects to be included into the result.
+        that must match for objects to be included into the result. 
+        The values of the selector can be lambda functions as well.
+        In that case, the verification would consist of passing the candidate's key attribute into that function. 
+        The return value should always be bool.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
@@ -43,7 +47,10 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent
         selector (dict, optional): The selector is a dictionary of properties,
-        that must match for objects to be included into the result.
+        that must match for objects to be included into the result. 
+        The values of the selector can be lambda functions as well.
+        In that case, the verification would consist of passing the candidate's key attribute into that function. 
+        The return value should always be bool.
         Defaults to {}, which means all objects pass the verification.
         max_depth (int): defines maximum depth in the object structure that should be
         while looking for children.
@@ -84,7 +91,10 @@ def find_ancestor(object_name: any, selector: dict = None):
     Args:
         object_name (any): symbolic name, real name, or object reference to the ancestor
         selector (dict, optional): The selector is a dictionary of properties,
-        that must match for objects to be included into the result.
+        that must match for objects to be included into the result. 
+        The values of the selector can be lambda functions as well.
+        In that case, the verification would consist of passing the candidate's key attribute into that function. 
+        The return value should always be bool.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
@@ -116,7 +126,10 @@ def siblings(object_name: any, selector: dict = None):
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent
         selector (dict, optional): The selector is a dictionary of properties,
-        that must match for objects to be included into the result.
+        that must match for objects to be included into the result. 
+        The values of the selector can be lambda functions as well.
+        In that case, the verification would consist of passing the candidate's key attribute into that function. 
+        The return value should always be bool.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
@@ -147,7 +160,10 @@ def _is_matching(object_name: any, selector: dict) -> bool:
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent
         selector (dict, optional): The selector is a dictionary of properties,
-        that must match for objects to be included into the result.
+        that must match for objects to be included into the result. 
+        The values of the selector can be lambda functions as well.
+        In that case, the verification would consist of passing the candidate's key attribute into that function. 
+        The return value should always be bool.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
@@ -157,17 +173,27 @@ def _is_matching(object_name: any, selector: dict) -> bool:
         return True
 
     object_reference = _get_object_reference(object_name)
-
+    
     for key, expected_value in selector.items():
         if key == "type":
+            # Type verification
             actual_type = squish.className(object_reference).rsplit("_QMLTYPE_", 1)[0]
             if actual_type != expected_value:
                 return False
-        elif (
-            not hasattr(object_reference, key)
-            or getattr(object_reference, key) != expected_value
-        ):
+        elif not hasattr(object_reference, key):
+            # Object does not have given attribute
             return False
+        else:
+            #object has given attribute
+            attr = getattr(object_reference, key)
+            if isinstance(expected_value, types.FunctionType):
+                # The key is a lambda function
+                lambda_function = expected_value
+                if not lambda_function(attr):
+                    return False
+                
+            elif attr != expected_value:
+                return False
     return True
 
 
