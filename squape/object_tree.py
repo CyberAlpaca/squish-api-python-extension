@@ -189,7 +189,10 @@ def _is_matching(object_name: any, selector: dict) -> bool:
             if isinstance(expected_value, types.FunctionType):
                 # The key is a lambda function
                 lambda_function = expected_value
-                if not lambda_function(attr):
+                lambda_result = lambda_function(attr)
+                if not isinstance(lambda_result, bool):
+                    raise RuntimeError(f"The lambda function assossiated with a key '{key}' returned non-boolean result: {lambda_result} ({type(lambda_result)})")
+                if not lambda_result:
                     return False
                 
             elif attr != expected_value:
