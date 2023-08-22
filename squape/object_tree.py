@@ -28,7 +28,8 @@ def children(object_name : any, selector: dict = None) -> tuple:
     """
     if selector is None:
         selector = {}
-    children = object.children(object_name)
+    object_reference = _get_object_reference(object_name)
+    children = object.children(object_reference)
     return tuple(filter(lambda x: _filter_by_selector(x, selector), children))
 
 
@@ -57,7 +58,9 @@ def find(object_name : any, selector: dict = None, max_depth=None, _depth=0) -> 
         return []
     if selector is None:
         selector = {}
-    children = list(object.children(object_name))
+    
+    object_reference = _get_object_reference(object_name)
+    children = list(object.children(object_reference))
     children_count = len(children)
 
     for index, child in enumerate(children):
@@ -92,13 +95,15 @@ def find_parent(object_name : any, selector: dict = None):
     if selector is None:
         selector = {}
 
-    if object.parent(object_name) is None:
+    object_reference = _get_object_reference(object_name)
+
+    if object.parent(object_reference) is None:
         return None
     
-    if _filter_by_selector(object.parent(object_name), selector):
-        return object.parent(object_name)
+    if _filter_by_selector(object.parent(object_reference), selector):
+        return object.parent(object_reference)
         
-    return find_parent(object.parent(object_name), selector)
+    return find_parent(object.parent(object_reference), selector)
 
 
 def siblings(object_name : any, selector: dict = None):
@@ -120,13 +125,14 @@ def siblings(object_name : any, selector: dict = None):
     """
     if selector is None:
         selector = {}
-    parent = object.parent(object_name)
+    object_reference = _get_object_reference(object_name)
+    parent = object.parent(object_reference)
 
     if parent is None:
         return None
     else:
         siblings = list(object.children(parent))
-        siblings.remove(object_name)
+        siblings.remove(object_reference)
         return tuple(filter(lambda x: _filter_by_selector(x, selector), siblings))
 
 
@@ -145,10 +151,26 @@ def _filter_by_selector(object_name : any, selector: dict) -> bool:
     if selector == {}:
         return True
 
+    object_reference = _get_object_reference(object_name)
+
     for key, expected_value in selector.items():
         if key == "type":
-            if squish.className(object_name) != expected_value:
+            if squish.className(object_reference) != expected_value:
                 return False
-        elif not hasattr(object_name, key) or getattr(object_name, key) != expected_value:
+        elif not hasattr(object_reference, key) or getattr(object_reference, key) != expected_value:
             return False
     return True
+
+def _get_object_reference(object_name: any) -> any:
+    """Get the object reference for the given symbolic, real names or object reference
+
+    Args:
+        object_name (any): symbolic name, real name, or object reference 
+
+    Returns:
+        object_reference: Object reference from the given object_name
+    """
+    if isinstance(object_name, dict):
+        # Symbolic name
+        return squish.waitForObjectExists(object_name)
+    return object_name
