@@ -30,7 +30,7 @@ def children(object_name : any, selector: dict = None) -> tuple:
         selector = {}
     object_reference = _get_object_reference(object_name)
     children = object.children(object_reference)
-    return tuple(filter(lambda x: _filter_by_selector(x, selector), children))
+    return tuple(filter(lambda x: _is_matches_selector(x, selector), children))
 
 
 def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
@@ -69,7 +69,7 @@ def find(object_name : any, selector: dict = None, max_depth=None) -> tuple:
         children.extend(find(child, max_depth=max_depth-1))
 
     if max_depth == 0:
-        filtered_children = filter(lambda x: _filter_by_selector(x, selector), children)
+        filtered_children = filter(lambda x: _is_matches_selector(x, selector), children)
         return tuple(filtered_children)
     else:
         return children
@@ -100,7 +100,7 @@ def find_parent(object_name : any, selector: dict = None):
     if object.parent(object_reference) is None:
         return None
     
-    if _filter_by_selector(object.parent(object_reference), selector):
+    if _is_matches_selector(object.parent(object_reference), selector):
         return object.parent(object_reference)
         
     return find_parent(object.parent(object_reference), selector)
@@ -133,10 +133,10 @@ def siblings(object_name : any, selector: dict = None):
     else:
         siblings = list(object.children(parent))
         siblings.remove(object_reference)
-        return tuple(filter(lambda x: _filter_by_selector(x, selector), siblings))
+        return tuple(filter(lambda x: _is_matches_selector(x, selector), siblings))
 
 
-def _filter_by_selector(object_name : any, selector: dict) -> bool:
+def _is_matches_selector(object_name : any, selector: dict) -> bool:
     """Verifies if the given object properties match with the given selector.
 
     Args:
