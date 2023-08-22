@@ -15,13 +15,16 @@ def children(obj, selector: dict = None) -> tuple:
     """Filter the direct children of the specified object by the specified selector
 
     Args:
-        obj (Squish object): A base object for this verification.
+        obj (Squish object): A parent node.
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
         tuple: the result of search among the object tree.
+
+    Examples:
+        children(object, {'type' : Button, 'visible' : True})
     """
     if selector is None:
         selector = {}
@@ -34,13 +37,19 @@ def find(obj, selector: dict = None, max_depth=None, _depth=0) -> tuple:
     of the specified object  by the specified selector
 
     Args:
-        obj (Squish object): A base object for this verification.
+        obj (Squish object): A parent node.
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
         tuple: the result of search among the object tree.
+
+    Examples:
+        find(object)
+        find(object, {'type' : ToolBar})
+        find(object, max_depth=5)
+        find(object, {'visible' : True}, max_depth=3)
     """
     if max_depth is None:
         max_depth = math.inf
@@ -68,7 +77,7 @@ def find_parent(obj, selector: dict = None):
     among all the parent objects up to the root.
 
     Args:
-        obj (Squish object): A base object for this verification.
+        obj (Squish object): A parent node.
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
@@ -76,15 +85,20 @@ def find_parent(obj, selector: dict = None):
     Returns:
         Squish object / None: The parent object that matches the selector.
         None if such a parent does not exist.
+
+    Examples:
+        find_parent(obj, {'type' : 'MyContainerType'})
     """
     if selector is None:
         selector = {}
+
     if object.parent(obj) is None:
         return None
-    elif _filter_by_selector(object.parent(obj), selector):
+    
+    if _filter_by_selector(object.parent(obj), selector):
         return object.parent(obj)
-    else:
-        return find_parent(object.parent(obj), selector)
+        
+    return find_parent(object.parent(obj), selector)
 
 
 def siblings(obj, selector: dict = None):
@@ -92,13 +106,17 @@ def siblings(obj, selector: dict = None):
     for a given object, that match the selector.
 
     Args:
-        obj (Squish object): A base object for this verification.
+        obj (Squish object): A parent node.
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
 
     Returns:
         tuple: the result of search among the object tree.
+
+    Examples:
+        siblings(object)
+        siblings(object, {'enabled' : True})
     """
     if selector is None:
         selector = {}
@@ -116,7 +134,7 @@ def _filter_by_selector(obj, selector: dict) -> bool:
     """Verifies if the given object properties match with the given selector.
 
     Args:
-        obj (Squish object): A base object for this verification.
+        obj (Squish object): A parent node.
         selector (dict, optional): The selector is a dictionary of properties,
         that must match for objects to be included into the result.
         Defaults to {}, which means all objects pass the verification.
