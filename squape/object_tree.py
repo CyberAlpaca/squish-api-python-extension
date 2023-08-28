@@ -15,27 +15,25 @@ except ImportError:
 import object
 
 
-def children(object_name: any, selector: dict = None) -> tuple:
+def children(object_name: any, selector: dict) -> tuple:
     """
     Finds direct children of the given object.
 
     Args:
         object_name (any): symbolic name, real name, or object reference to the parent.
 
-        selector (dict, optional): The selector is a dictionary of key-value pairs,
+        selector (dict): The selector is a dictionary of key-value pairs,
         where a key is a property of an object, and value is expected value.
         The object will pass verification
         if the object's property value matches the selector value.
         Selectors also may include functions.
         The passed functions must accept exactly 1 argument.
-        Defaults to {}, which means all objects pass the verification.
 
     Returns:
         tuple: children objects that met the selector criteria.
 
     Examples:
         ```python
-        children(object_name)
         children(object_name, {'type' : QToolButton, 'height': 50})
         children(object_name, {'type' : 'Button', 'visible' : True})
         children(object_name, {'type' : 'QToolButton', 'height' : lambda x: x > 25})
@@ -48,8 +46,6 @@ def children(object_name: any, selector: dict = None) -> tuple:
         )
         ```
     """
-    if selector is None:
-        selector = {}
     object_reference = _get_object_reference(object_name)
     children = object.children(object_reference)
     return tuple(filter(lambda x: _is_matching(x, selector), children))
@@ -115,7 +111,7 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
     return children
 
 
-def find_ancestor(object_name: any, selector: dict = None):
+def find_ancestor(object_name: any, selector: dict):
     """
     Find the first object's ancestor that matches the selector.
 
@@ -123,13 +119,12 @@ def find_ancestor(object_name: any, selector: dict = None):
         object_name (any): symbolic name, real name,
         or object reference to the ancestor.
 
-        selector (dict, optional): The selector is a dictionary of key-value pairs,
+        selector (dict): The selector is a dictionary of key-value pairs,
         where a key is a property of an object, and value is expected value.
         The object will pass verification
         if the object's property value matches the selector value.
         Selectors also may include functions.
         The passed functions must accept exactly 1 argument.
-        Defaults to {}, which means all objects pass the verification.
 
     Returns:
         Squish object / None: The ancestor object that matches the selector.
@@ -152,9 +147,6 @@ def find_ancestor(object_name: any, selector: dict = None):
         )
         ```
     """
-    if selector is None:
-        selector = {}
-
     object_reference = _get_object_reference(object_name)
     parent = object.parent(object_reference)
 
