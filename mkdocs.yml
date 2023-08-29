@@ -20,6 +20,7 @@ theme:
 nav:
 - Squape: index.md
 - Code Reference:
+  - 'squape.object_tree': reference/object_tree.md
   - 'squape.report': reference/report.md
   - 'squape.settings': reference/settings.md
   - 'squape.squishserver': reference/squishserver.md
