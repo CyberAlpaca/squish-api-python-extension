@@ -24,10 +24,10 @@ def children(object_name: any, selector: dict) -> tuple:
 
         selector (dict): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
-            The object will pass verification
+            An object will pass verification
             if the object's property value matches the selector value.
-            Selectors also may include functions.
-            The passed functions must accept exactly 1 argument.
+            Selectors may include functions.
+            The passed functions must accept exactly one argument.
 
     Returns:
         tuple: children objects that met the selector criteria.
@@ -60,10 +60,10 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
-            The object will pass verification
+            An object will pass verification
             if the object's property value matches the selector value.
-            Selectors also may include functions.
-            The passed functions must accept exactly 1 argument.
+            Selectors may include functions.
+            The passed functions must accept exactly one argument.
             Defaults to {}, which means all objects pass the verification.
 
         max_depth (int): defines maximum depth in the object structure that should be
@@ -121,10 +121,10 @@ def find_ancestor(object_name: any, selector: dict):
 
         selector (dict): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
-            The object will pass verification
+            An object will pass verification
             if the object's property value matches the selector value.
-            Selectors also may include functions.
-            The passed functions must accept exactly 1 argument.
+            Selectors may include functions.
+            The passed functions must accept exactly one argument.
 
     Returns:
         Squish object / None: The ancestor object that matches the selector.
@@ -168,10 +168,10 @@ def siblings(object_name: any, selector: dict = None):
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
-            The object will pass verification
+            An object will pass verification
             if the object's property value matches the selector value.
-            Selectors also may include functions.
-            The passed functions must accept exactly 1 argument.
+            Selectors may include functions.
+            The passed functions must accept exactly one argument.
             Defaults to {}, which means all objects pass the verification.
 
     Returns:
@@ -213,10 +213,10 @@ def _is_matching(object_name: any, selector: dict) -> bool:
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
-            The object will pass verification
+            An object will pass verification
             if the object's property value matches the selector value.
-            Selectors also may include functions.
-            The passed functions must accept exactly 1 argument.
+            Selectors may include functions.
+            The passed functions must accept exactly one argument.
             Defaults to {}, which means all objects pass the verification.
 
     Returns:
