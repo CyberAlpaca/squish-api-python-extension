@@ -20,7 +20,7 @@ def children(object_name: any, selector: dict) -> tuple:
     Finds direct children of the given object.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference to the parent.
+        object_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -30,7 +30,7 @@ def children(object_name: any, selector: dict) -> tuple:
             The passed functions must accept exactly one argument.
 
     Returns:
-        tuple: children objects that met the selector criteria.
+        Children objects that met the selector criteria.
 
     Examples:
         ```python
@@ -53,10 +53,10 @@ def children(object_name: any, selector: dict) -> tuple:
 
 def find(object_name: any, selector: dict = None, max_depth: int = None) -> tuple:
     """
-    Finds all descendants of the given object.
+    Finds descendants of the given object.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference to the parent.
+        object_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -71,7 +71,7 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
             Defaults to None, which mean there is no depth limit.
 
     Returns:
-        tuple: the result of search among the object tree.
+        Descendants of the given object that met the selector criteria.
 
     Examples:
         ```python
@@ -116,8 +116,7 @@ def find_ancestor(object_name: any, selector: dict):
     Find the first object's ancestor that matches the selector.
 
     Args:
-        object_name (any): symbolic name, real name,
-            or object reference to the ancestor.
+        object_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -127,8 +126,7 @@ def find_ancestor(object_name: any, selector: dict):
             The passed functions must accept exactly one argument.
 
     Returns:
-        Squish object / None: The ancestor object that matches the selector.
-        None if such an ancestor does not exist.
+        (Squish object / None): The ancestor object that matches the selector.
 
     Examples:
         ```python
@@ -159,12 +157,12 @@ def find_ancestor(object_name: any, selector: dict):
     return find_ancestor(parent, selector)
 
 
-def siblings(object_name: any, selector: dict = None):
+def siblings(object_name: any, selector: dict = None) -> tuple:
     """
-    Find all the object's siblings.
+    Find the object's siblings.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference to the parent.
+        object_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -175,7 +173,7 @@ def siblings(object_name: any, selector: dict = None):
             Defaults to {}, which means all objects pass the verification.
 
     Returns:
-        tuple: the result of search among the object tree.
+        Siblings of the given object that met the selector criteria.
 
     Examples:
         ```python
@@ -209,7 +207,7 @@ def _is_matching(object_name: any, selector: dict) -> bool:
     Checks if the properties of the given object match the provided selector.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference to the parent.
+        object_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -220,7 +218,7 @@ def _is_matching(object_name: any, selector: dict) -> bool:
             Defaults to {}, which means all objects pass the verification.
 
     Returns:
-        bool: True if object matches selector, False otherwise.
+        True if the object matches the selector, False otherwise.
     """
     if selector == {}:
         return True
@@ -265,7 +263,7 @@ def _get_object_reference(object_name: any) -> any:
         object_name (any): symbolic name, real name, or object reference.
 
     Returns:
-        object_reference: Object reference from the given object_name.
+        (Squish object): Object reference from the given object_name.
     """
     if isinstance(object_name, dict):
         # Symbolic name
