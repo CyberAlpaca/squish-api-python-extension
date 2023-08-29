@@ -6,6 +6,7 @@ try:
     import squish
 except ImportError:
     import squishtest as squish
+
 from remotesystem import RemoteSystem
 
 from internal.exceptions import EnvironmentError
@@ -54,7 +55,7 @@ class SquishServer:
             self.remotesys = RemoteSystem(host, port)
         except Exception:
             raise SquishserverError(
-                f"Unable to connect to squishserver ({host}:{port})"
+                f"Unable to connect to squishserver ({self.host}:{self.port})"
             )
 
     def _config_squishserver(self, config_option: str, params=None, cwd=None):
