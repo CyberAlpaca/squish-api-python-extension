@@ -23,11 +23,11 @@ def children(object_name: any, selector: dict) -> tuple:
         object_name (any): symbolic name, real name, or object reference to the parent.
 
         selector (dict): The selector is a dictionary of key-value pairs,
-        where a key is a property of an object, and value is expected value.
-        The object will pass verification
-        if the object's property value matches the selector value.
-        Selectors also may include functions.
-        The passed functions must accept exactly 1 argument.
+            where a key is a property of an object, and value is expected value.
+            The object will pass verification
+            if the object's property value matches the selector value.
+            Selectors also may include functions.
+            The passed functions must accept exactly 1 argument.
 
     Returns:
         tuple: children objects that met the selector criteria.
@@ -59,16 +59,16 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
         object_name (any): symbolic name, real name, or object reference to the parent.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
-        where a key is a property of an object, and value is expected value.
-        The object will pass verification
-        if the object's property value matches the selector value.
-        Selectors also may include functions.
-        The passed functions must accept exactly 1 argument.
-        Defaults to {}, which means all objects pass the verification.
+            where a key is a property of an object, and value is expected value.
+            The object will pass verification
+            if the object's property value matches the selector value.
+            Selectors also may include functions.
+            The passed functions must accept exactly 1 argument.
+            Defaults to {}, which means all objects pass the verification.
 
         max_depth (int): defines maximum depth in the object structure that should be
-        while looking for children.
-        Defaults to None, which mean there is no depth limit.
+            while looking for children.
+            Defaults to None, which mean there is no depth limit.
 
     Returns:
         tuple: the result of search among the object tree.
@@ -117,14 +117,14 @@ def find_ancestor(object_name: any, selector: dict):
 
     Args:
         object_name (any): symbolic name, real name,
-        or object reference to the ancestor.
+            or object reference to the ancestor.
 
         selector (dict): The selector is a dictionary of key-value pairs,
-        where a key is a property of an object, and value is expected value.
-        The object will pass verification
-        if the object's property value matches the selector value.
-        Selectors also may include functions.
-        The passed functions must accept exactly 1 argument.
+            where a key is a property of an object, and value is expected value.
+            The object will pass verification
+            if the object's property value matches the selector value.
+            Selectors also may include functions.
+            The passed functions must accept exactly 1 argument.
 
     Returns:
         Squish object / None: The ancestor object that matches the selector.
@@ -167,12 +167,12 @@ def siblings(object_name: any, selector: dict = None):
         object_name (any): symbolic name, real name, or object reference to the parent.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
-        where a key is a property of an object, and value is expected value.
-        The object will pass verification
-        if the object's property value matches the selector value.
-        Selectors also may include functions.
-        The passed functions must accept exactly 1 argument.
-        Defaults to {}, which means all objects pass the verification.
+            where a key is a property of an object, and value is expected value.
+            The object will pass verification
+            if the object's property value matches the selector value.
+            Selectors also may include functions.
+            The passed functions must accept exactly 1 argument.
+            Defaults to {}, which means all objects pass the verification.
 
     Returns:
         tuple: the result of search among the object tree.
@@ -212,12 +212,12 @@ def _is_matching(object_name: any, selector: dict) -> bool:
         object_name (any): symbolic name, real name, or object reference to the parent.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
-        where a key is a property of an object, and value is expected value.
-        The object will pass verification
-        if the object's property value matches the selector value.
-        Selectors also may include functions.
-        The passed functions must accept exactly 1 argument.
-        Defaults to {}, which means all objects pass the verification.
+            where a key is a property of an object, and value is expected value.
+            The object will pass verification
+            if the object's property value matches the selector value.
+            Selectors also may include functions.
+            The passed functions must accept exactly 1 argument.
+            Defaults to {}, which means all objects pass the verification.
 
     Returns:
         bool: True if object matches selector, False otherwise.
