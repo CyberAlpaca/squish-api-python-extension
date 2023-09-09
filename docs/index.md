@@ -5,7 +5,7 @@
 Python package that extends Squish Python API. It provides tools for everyday automated test cases development.
 
 ### Requirements
-To enjoy all the features of the SQUAPE package, you have to use it with Squish version 6.7.0 or newer. 
+The minimal requirement for the SQUAPE package is Squish version 6.7.0. Individual features may require a more recent Squish package. 
 
 ### Installation
 The package is available on the Python Package Index (PyPI).
