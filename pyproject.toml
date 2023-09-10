@@ -11,13 +11,14 @@ namespaces = false
 
 [project]
 name = "squape"
-version = "0.2.2"
+version = "1.0.0"
 authors = [
     { name="Cyber Alpaca", email="contact@cyberalpaca.com" },
 ]
 requires-python = ">=3.8"
 readme = "README.md"
 description = "Python utilities for the Squish GUI Tester"
+
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -28,4 +29,5 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/CyberAlpaca/squish-api-python-extension"
+"Documentation" = "https://squape.cyberalpaca.com"
 "Cyber Alpaca" = "https://cyberalpaca.com"

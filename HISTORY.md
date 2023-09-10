@@ -1,3 +1,12 @@
+# 1.0.0 (2023-09-20)
+## New Features
+- squishserver module - allows managing squishservers and (un)registering AUTs directly from your tests (#18)
+- object_tree module - introduces a seamless object tree navigation and search capabilities (#28)
+- Comprehensive documentation [(https://squape.cyberalpaca.com)](https://squape.cyberalpaca.com) for the Squape module is now available to help you make the most of its features
+
+## Improvements
+- squishtest support - Squape can be used togather with squishtest module now (#33)
+
 # 0.2.2 (2023-05-21)
 ## Bugfixes
 - Fixed activating log level support for some Squish test functions (#27)
