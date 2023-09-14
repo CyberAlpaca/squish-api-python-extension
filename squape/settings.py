@@ -57,7 +57,7 @@ def logScreenshotOnPass(enabled: bool = True) -> None:
 
     Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on PASS test result. Defaulting to True.
+            of screenshots on PASS test result. Defaulting to True.
 
     Examples:
         ```python
@@ -76,7 +76,7 @@ def logScreenshotOnFail(enabled: bool = True) -> None:
 
     Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on FAIL test result. Defaulting to True.
+            of screenshots on FAIL test result. Defaulting to True.
 
     Examples:
         ```python
@@ -96,7 +96,7 @@ def logScreenshotOnWarning(enabled: bool = True) -> None:
 
     Args:
         enabled (bool): A boolean value indicating whether to enable logging
-        of screenshots on warning log entry. Defaulting to True.
+            of screenshots on warning log entry. Defaulting to True.
 
     Examples:
         ```python
@@ -133,7 +133,7 @@ def imageSearchTolerant(enabled: bool = True) -> None:
 
     Args:
         enabled (bool): Whether image search with tolerance is enabled.
-        Defaulting to True.
+            Defaulting to True.
 
     Examples:
         ```python
@@ -263,7 +263,7 @@ def imageNotFoundDebugging(enabled: bool) -> None:
     """Allows using imageNotFoundDebugging test setting as context managers.
     https://doc.qt.io/squish/squish-api.html#bool-testsettings-imagenotfounddebugging
 
-     Args:
+    Args:
         enabled (bool): Whether to enable debugging when image is not found.
 
     Examples:
@@ -303,7 +303,7 @@ def defaultOcrLanguage(language: str) -> None:
 
     Args:
         language (str): string text representing the Language to be used
-        for OCR Text search
+            for OCR Text search
 
     Examples:
         ```python
@@ -323,7 +323,7 @@ def breakOnFailure(enabled: bool = True) -> None:
 
     Args:
         enabled (bool): Whether to enable the debugger to stop
-        on every failed verification
+            on every failed verification
 
     Examples:
         ```python
@@ -342,7 +342,7 @@ def throwOnFailure(enabled: bool) -> None:
 
     Args:
         enabled (bool): Whether to enable to raise a script error
-        on every failed verification
+            on every failed verification
 
     Examples:
         ```python
@@ -361,7 +361,7 @@ def retryDuration(duration_ms: int) -> None:
 
     Args:
         duration_ms (int): The duration in milliseconds after which
-        the verification fails
+            the verification fails
 
     Examples:
         ```python

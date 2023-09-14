@@ -216,8 +216,9 @@ def fatal(msg: str, details: str = "") -> None:
 def enable_loglevel_in_test_module() -> None:
     """Adds support for log levels to the Squish 'test' module.
 
-    DISCLAIMER: This function uses monkeypathching
-    https://en.wikipedia.org/wiki/Monkey_patch
+    !!! warning
+        This function uses monkey pathching
+        https://en.wikipedia.org/wiki/Monkey_patch
 
     This function overwrites some of the existing functions in the 'test' module
     to support logging at different log levels.
@@ -249,7 +250,6 @@ def enable_loglevel_in_test_module() -> None:
 @contextmanager
 def section(title: str, description: str = "") -> None:
     """Allows using Squish's sections as context managers
-
     https://doc.qt.io/squish/squish-api.html#test-startsection-function
     Args:
         title (str): Section title
