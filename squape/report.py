@@ -231,11 +231,12 @@ def enable_loglevel_in_test_module() -> None:
 
     After calling this function, the following 'test' module's functions will support
     LOGLEVEL report setting:
-    - test.debug(...)
-    - test.log(...)
-    - test.warning(...)
-    - test.fail(...)
-    - test.fatal(...)
+
+        - test.debug(...)
+        - test.log(...)
+        - test.warning(...)
+        - test.fail(...)
+        - test.fatal(...)
 
     Returns:
         None
