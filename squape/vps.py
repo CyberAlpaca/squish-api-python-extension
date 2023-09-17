@@ -27,6 +27,7 @@ def vph_property(
         property_name (str): name of the property to verify
         expected_value (any): expected value of the verified property
         msg (str): verification message
+
     Returns:
         True if verification is positive, False otherwise
     """
