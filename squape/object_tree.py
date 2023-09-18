@@ -15,12 +15,12 @@ except ImportError:
 import object
 
 
-def children(object_name: any, selector: dict) -> tuple:
+def children(object_or_name: any, selector: dict) -> tuple:
     """
     Finds direct children of the given object.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference.
+        object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -34,29 +34,29 @@ def children(object_name: any, selector: dict) -> tuple:
 
     Examples:
         ```python
-        children(object_name, {'type' : QToolButton, 'height': 50})
-        children(object_name, {'type' : 'Button', 'visible' : True})
-        children(object_name, {'type' : 'QToolButton', 'height' : lambda x: x > 25})
+        children(object_or_name, {'type' : QToolButton, 'height': 50})
+        children(object_or_name, {'type' : 'Button', 'visible' : True})
+        children(object_or_name, {'type' : 'QToolButton', 'height' : lambda x: x > 25})
 
         def height_filter_function(height: int) -> bool:
             return height > 30 and height < 120
         children(
-            object_name,
+            object_or_name,
             {'type' : 'QToolButton', 'height' : height_filter_function}
         )
         ```
     """
-    object_reference = _get_object_reference(object_name)
+    object_reference = _get_object_reference(object_or_name)
     children = object.children(object_reference)
     return tuple(filter(lambda x: _is_matching(x, selector), children))
 
 
-def find(object_name: any, selector: dict = None, max_depth: int = None) -> tuple:
+def find(object_or_name: any, selector: dict = None, max_depth: int = None) -> tuple:
     """
     Finds descendants of the given object.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference.
+        object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -75,12 +75,12 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
 
     Examples:
         ```python
-        find(object_name)
-        find(object_name, {'type' : 'ToolBar'})
-        find(object_name, max_depth=5)
-        find(object_name, {'visible' : True}, max_depth=3)
+        find(object_or_name)
+        find(object_or_name, {'type' : 'ToolBar'})
+        find(object_or_name, max_depth=5)
+        find(object_or_name, {'visible' : True}, max_depth=3)
         find(
-            object_name,
+            object_or_name,
             {'type' : 'QToolButton', 'height' : lambda x: x > 25},
             max_depth=5
         )
@@ -88,7 +88,7 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
         def height_filter_function(height: int) -> bool:
             return height > 30 and height < 120
         find(
-            object_name,
+            object_or_name,
             {'type' : 'QToolButton', 'height' : height_filter_function}
         )
         ```
@@ -100,7 +100,7 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
     if selector is None:
         selector = {}
 
-    object_reference = _get_object_reference(object_name)
+    object_reference = _get_object_reference(object_or_name)
     children = ()
 
     for child in object.children(object_reference):
@@ -111,12 +111,12 @@ def find(object_name: any, selector: dict = None, max_depth: int = None) -> tupl
     return children
 
 
-def find_ancestor(object_name: any, selector: dict):
+def find_ancestor(object_or_name: any, selector: dict):
     """
     Find the first object's ancestor that matches the selector.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference.
+        object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -130,22 +130,22 @@ def find_ancestor(object_name: any, selector: dict):
 
     Examples:
         ```python
-        find_ancestor(object_name)
-        find_ancestor(object_name, {'type' : 'MyContainerType'})
+        find_ancestor(object_or_name)
+        find_ancestor(object_or_name, {'type' : 'MyContainerType'})
         find_ancestor(
-            object_name,
+            object_or_name,
             {'type' : 'QToolButton', 'height' : lambda x: x > 25}
         )
 
         def height_filter_function(height: int) -> bool:
             return height > 30 and height < 120
         find_ancestor(
-            object_name,
+            object_or_name,
             {'type' : 'QToolButton', 'height' : height_filter_function}
         )
         ```
     """
-    object_reference = _get_object_reference(object_name)
+    object_reference = _get_object_reference(object_or_name)
     parent = object.parent(object_reference)
 
     if parent is None:
@@ -157,12 +157,12 @@ def find_ancestor(object_name: any, selector: dict):
     return find_ancestor(parent, selector)
 
 
-def siblings(object_name: any, selector: dict = None) -> tuple:
+def siblings(object_or_name: any, selector: dict = None) -> tuple:
     """
     Find the object's siblings.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference.
+        object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -179,19 +179,19 @@ def siblings(object_name: any, selector: dict = None) -> tuple:
         ```python
         siblings(object)
         siblings(object, {'enabled' : True})
-        siblings(object_name, {'type' : 'QToolButton', 'height' : lambda x: x > 25})
+        siblings(object_or_name, {'type' : 'QToolButton', 'height' : lambda x: x > 25})
 
         def height_filter_function(height: int) -> bool:
             return height > 30 and height < 120
         siblings(
-            object_name,
+            object_or_name,
             {'type' : 'QToolButton', 'height' : height_filter_function}
         )
         ```
     """
     if selector is None:
         selector = {}
-    object_reference = _get_object_reference(object_name)
+    object_reference = _get_object_reference(object_or_name)
     parent = object.parent(object_reference)
 
     if parent is None:
@@ -202,12 +202,12 @@ def siblings(object_name: any, selector: dict = None) -> tuple:
         return tuple(filter(lambda x: _is_matching(x, selector), siblings))
 
 
-def _is_matching(object_name: any, selector: dict) -> bool:
+def _is_matching(object_or_name: any, selector: dict) -> bool:
     """
     Checks if the properties of the given object match the provided selector.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference.
+        object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
@@ -223,7 +223,7 @@ def _is_matching(object_name: any, selector: dict) -> bool:
     if selector == {}:
         return True
 
-    object_reference = _get_object_reference(object_name)
+    object_reference = _get_object_reference(object_or_name)
 
     for key, expected_value in selector.items():
         if key == "type":
@@ -255,17 +255,17 @@ def _is_matching(object_name: any, selector: dict) -> bool:
     return True
 
 
-def _get_object_reference(object_name: any) -> any:
+def _get_object_reference(object_or_name: any) -> any:
     """
     Get the object reference for the given symbolic, real names or object reference.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference.
+        object_or_name (any): symbolic name, real name, or object reference.
 
     Returns:
-        (Squish object): Object reference from the given object_name.
+        (Squish object): Object reference from the given object_or_name.
     """
-    if isinstance(object_name, dict):
+    if isinstance(object_or_name, dict):
         # Symbolic name
-        return squish.waitForObjectExists(object_name)
-    return object_name
+        return squish.waitForObjectExists(object_or_name)
+    return object_or_name

@@ -16,14 +16,14 @@ import test
 
 
 def vph_property(
-    object_name: any, property_name: str, expected_value: any, msg: str
+    object_or_name: any, property_name: str, expected_value: any, msg: str
 ) -> bool:
     """ "Highlights the object then verifies its property.
     The object remains highlighted during verification to make it easier to identify
     on potential screenshots.
 
     Args:
-        object_name (any): symbolic name, real name, or object reference
+        object_or_name (any): symbolic name, real name, or object reference
         property_name (str): name of the property to verify
         expected_value (any): expected value of the verified property
         msg (str): verification message
@@ -31,7 +31,7 @@ def vph_property(
         True if verification is positive, False otherwise
     """
 
-    obj = squish.waitForObjectExists(object_name)
+    obj = squish.waitForObjectExists(object_or_name)
     property_value = operator.attrgetter(property_name)(obj)
     squish.highlightObject(obj, 200, False)
     result = test.compare(property_value, expected_value, msg)
