@@ -16,6 +16,7 @@ pip install squape
 
 ### Content
 The package consists of several modules:
+
 - object_tree - seamless object tree navigation and search capabilities
 - report - adds features to enhance the reporting capabilities of Squish
 - settings - makes using various test settings easier and cleaner
