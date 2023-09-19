@@ -18,7 +18,7 @@ import test
 def vph_property(
     object_or_name: any, property_name: str, expected_value: any, msg: str
 ) -> bool:
-    """ "Highlights the object then verifies its property.
+    """Highlights the object then verifies its property.
     The object remains highlighted during verification to make it easier to identify
     on potential screenshots.
 
@@ -27,6 +27,7 @@ def vph_property(
         property_name (str): name of the property to verify
         expected_value (any): expected value of the verified property
         msg (str): verification message
+
     Returns:
         True if verification is positive, False otherwise
     """

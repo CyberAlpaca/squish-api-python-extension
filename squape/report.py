@@ -231,11 +231,12 @@ def enable_loglevel_in_test_module() -> None:
 
     After calling this function, the following 'test' module's functions will support
     LOGLEVEL report setting:
-    - test.debug(...)
-    - test.log(...)
-    - test.warning(...)
-    - test.fail(...)
-    - test.fatal(...)
+
+        - test.debug(...)
+        - test.log(...)
+        - test.warning(...)
+        - test.fail(...)
+        - test.fatal(...)
 
     Returns:
         None
@@ -251,9 +252,11 @@ def enable_loglevel_in_test_module() -> None:
 def section(title: str, description: str = "") -> None:
     """Allows using Squish's sections as context managers
     https://doc.qt.io/squish/squish-api.html#test-startsection-function
+
     Args:
         title (str): Section title
         description (str): Optional additional description of the section
+
     Examples:
         ```python
         with section("Add new person"):

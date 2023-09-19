@@ -178,6 +178,7 @@ class SquishServer:
 
         Args:
             aut (str): the name of the attachable AUT
+
         Returns:
             (ApplicationContext): application context
         """
@@ -191,6 +192,7 @@ class SquishServer:
 
         Args:
             aut (str): the name of the mapped AUT
+
         Returns:
             (ApplicationContext): application context
         """
