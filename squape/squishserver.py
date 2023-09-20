@@ -9,9 +9,9 @@ except ImportError:
 
 from remotesystem import RemoteSystem
 
-from internal.exceptions import EnvironmentError
-from internal.exceptions import SquishserverError
-from report import debug, log
+from squape.internal.exceptions import EnvironmentError
+from squape.internal.exceptions import SquishserverError
+from squape.report import debug, log
 
 
 class SquishServer:
