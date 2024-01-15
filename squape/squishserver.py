@@ -24,18 +24,18 @@ class SquishServer:
             location (_type_, optional):    location of the Squish package.
                                             Defaults to the "SQUISH_PREFIX".
             host (str, optional): host of the squishserver.
-                                  Defaults to SQUISHRUNNER_HOST if it is defined,
-                                  else "127.0.0.1".
+                Defaults to SQUISHRUNNER_HOST environment variable if it is defined,
+                else "127.0.0.1".
             port (int, optional): port of the squishserver.
-                                  Defaults to SQUISHRUNNER_PORT if it is defined,
-                                  else 4322.
+                Defaults to SQUISHRUNNER_PORT environment variable if it is defined,
+                else 4322.
         """
         if location is None:
             try:
                 self.location = os.environ["SQUISH_PREFIX"]
             except KeyError:
                 raise EnvironmentError(
-                    "The SQUISH_PREFIX variable is not set, "
+                    "The SQUISH_PREFIX environment variable is not set, "
                     "and location of the squishserver "
                     f"({self.host}:{self.port}) is not specified!"
                 )
@@ -44,12 +44,16 @@ class SquishServer:
 
         if host is None:
             self.host = os.environ.get("SQUISHRUNNER_HOST", "127.0.0.1")
+        else:
+            self.host = host
 
         if port is None:
             if "SQUISHRUNNER_PORT" in os.environ:
                 self.port = int(os.environ["SQUISHRUNNER_PORT"])
             else:
                 self.port = 4322
+        else:
+            self.port = port
 
         try:
             self.remotesys = RemoteSystem(host, port)
