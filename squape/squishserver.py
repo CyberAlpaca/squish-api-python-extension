@@ -21,8 +21,8 @@ class SquishServer:
         """Open an RemoteSystem connection to a machine with a running squishserver
 
         Args:
-            location (_type_, optional):    location of the Squish package.
-                                            Defaults to the "SQUISH_PREFIX".
+            location (str, optional): location of the Squish package.
+                Defaults to the "SQUISH_PREFIX".
             host (str, optional): host of the squishserver.
                 Defaults to SQUISHRUNNER_HOST environment variable if it is defined,
                 else "127.0.0.1".
