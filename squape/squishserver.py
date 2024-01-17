@@ -15,14 +15,14 @@ from squape.report import debug, log
 
 
 class SquishServer:
-    """Class to represent a local or remote squishserver"""
+    """Class to configure a running local or remote squishserver"""
 
     def __init__(self, location=None, host=None, port=None):
-        """Open an RemoteSystem connection to a machine with a running squishserver
+        """Open an RemoteSystem connection to a running squishserver
 
         Args:
             location (str, optional): location of the Squish package.
-                Defaults to the "SQUISH_PREFIX".
+                If not provided, it will be taken from the squishserver process,
             host (str, optional): host of the squishserver.
                 Defaults to SQUISHRUNNER_HOST environment variable if it is defined,
                 else "127.0.0.1".
@@ -30,17 +30,6 @@ class SquishServer:
                 Defaults to SQUISHRUNNER_PORT environment variable if it is defined,
                 else 4322.
         """
-        if location is None:
-            try:
-                self.location = os.environ["SQUISH_PREFIX"]
-            except KeyError:
-                raise EnvironmentError(
-                    "The SQUISH_PREFIX environment variable is not set, "
-                    "and location of the squishserver "
-                    f"({self.host}:{self.port}) is not specified!"
-                )
-        else:
-            self.location = location
 
         if host is None:
             self.host = os.environ.get("SQUISHRUNNER_HOST", "127.0.0.1")
@@ -62,8 +51,21 @@ class SquishServer:
                 f"Unable to connect to squishserver ({self.host}:{self.port})"
             )
 
+        if location is None:
+            try:
+                self.location = self.remotesys.getEnvironmentVariable("SQUISH_PREFIX")
+            except KeyError:
+                raise EnvironmentError(
+                    "The SQUISH_PREFIX environment variable is not set, "
+                    "and location of the squishserver "
+                    f"({self.host}:{self.port}) is not specified!"
+                )
+        else:
+            self.location = location
+
     def _config_squishserver(self, config_option: str, params=None, cwd=None):
         """Configures the squishserver by calling 'squishserver --config ...' command
+
 
         Args:
             config_option (str): the config option to be used during configuration.
