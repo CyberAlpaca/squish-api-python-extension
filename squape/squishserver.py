@@ -21,14 +21,19 @@ class SquishServer:
         """Open an RemoteSystem connection to a running squishserver
 
         Args:
-            location (str, optional): location of the Squish package.
-                If not provided, it will be taken from the squishserver process,
-            host (str, optional): host of the squishserver.
-                Defaults to SQUISHRUNNER_HOST environment variable if it is defined,
-                else "127.0.0.1".
-            port (int, optional): port of the squishserver.
-                Defaults to SQUISHRUNNER_PORT environment variable if it is defined,
-                else 4322.
+            location (str, optional): The location of the Squish package.
+                If provided, this value will be used.
+                If not provided, it will be taken from the squishserver process.
+            host (str, optional): The host of the squishserver.
+                If provided, this value will be used.
+                If not provided, the value of the squishrunner's "--host"
+                will be used if set.
+                If "--host" was not set, the default value "127.0.0.1" will be used.
+            port (int, optional): The host of the squishserver.
+                If provided, this value will be used.
+                If not provided, the value of the squishrunner's "--port"
+                will be used if set.
+                If "--port" was not set, the default value "127.0.0.1" will be used.
         """
 
         if host is None:
