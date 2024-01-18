@@ -1,3 +1,7 @@
+# 1.0.1 (2024-01-18)
+## Bugfixes
+- squishserver module - fix handling of the host, port, and location of the target squishserver (#48)
+
 # 1.0.0 (2023-09-20)
 ## New Features
 - squishserver module - allows managing squishservers and (un)registering AUTs directly from your tests (#18)
