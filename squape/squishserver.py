@@ -86,8 +86,7 @@ class SquishServer:
 
         debug(
             f"[Squishserver {self.host}:{self.port}] "
-            "Executing command: squishserver --config "
-            f"{' '.join(params)}",
+            f"Executing command: {' '.join(cmd)}",
             f"cwd: {cwd}",
         )
         (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
