@@ -30,4 +30,5 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/CyberAlpaca/squish-api-python-extension"
 "Documentation" = "https://squape.cyberalpaca.com"
+"Changelog" = "https://github.com/CyberAlpaca/squish-api-python-extension/blob/main/HISTORY.md"
 "Cyber Alpaca" = "https://cyberalpaca.com"
