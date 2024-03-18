@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from pathlib import Path
+from pathlib import PureWindowsPath
 
 try:
     import squish
@@ -108,7 +109,7 @@ class SquishServer:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
-        path_resolved = Path(path).as_posix()
+        path_resolved = PureWindowsPath(path).as_posix()
         log(
             f"[Squishserver {self.host}:{self.port}] "
             f"Registering {path_resolved}/{aut} AUT"
