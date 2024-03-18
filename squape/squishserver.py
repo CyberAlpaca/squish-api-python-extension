@@ -111,7 +111,7 @@ class SquishServer:
         path_resolved = Path(path).as_posix()
         log(
             f"[Squishserver {self.host}:{self.port}] "
-            f"Registering {path_resolved/aut} AUT"
+            f"Registering {path_resolved}/{aut} AUT"
         )
         self._config_squishserver("addAUT", [aut, path_resolved])
 
