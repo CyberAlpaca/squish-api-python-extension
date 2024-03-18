@@ -108,11 +108,12 @@ class SquishServer:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
+        path_resolved = Path(path).as_posix()
         log(
             f"[Squishserver {self.host}:{self.port}] "
-            f"Registering {Path(path)/aut} AUT"
+            f"Registering {path_resolved/aut} AUT"
         )
-        self._config_squishserver("addAUT", [aut, path])
+        self._config_squishserver("addAUT", [aut, path_resolved])
 
     def removeAUT(self, aut: str, path: str) -> None:
         """Remove registered AUT
