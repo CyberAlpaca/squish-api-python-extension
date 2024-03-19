@@ -145,8 +145,12 @@ class SquishServer:
         Args:
             path (str): the AUT path to register
         """
-        log(f"[Squishserver {self.host}:{self.port}] " f"Registering AUT path: {path}")
-        self._config_squishserver("addAppPath", [path])
+        path_resolved = PureWindowsPath(path).as_posix().strip()
+        log(
+            f"[Squishserver {self.host}:{self.port}] "
+            f"Registering AUT path: {path_resolved}"
+        )
+        self._config_squishserver("addAppPath", [path_resolved])
 
     def removeAppPath(self, path: str) -> None:
         """Remove a registered AUT path
@@ -154,11 +158,12 @@ class SquishServer:
         Args:
             path (str): the path to the AUT
         """
+        path_resolved = PureWindowsPath(path).as_posix().strip()
         log(
             f"[Squishserver {self.host}:{self.port}] "
-            f"Removing registered AUT path: {path}"
+            f"Removing registered AUT path: {path_resolved}"
         )
-        self._config_squishserver("removeAppPath", [path])
+        self._config_squishserver("removeAppPath", [path_resolved])
 
     def addAttachableAut(self, aut: str, port: int, host: str = "127.0.0.1") -> None:
         """Register an attachable AUT
