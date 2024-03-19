@@ -90,7 +90,17 @@ class SquishServer:
             f"Executing command: {' '.join(cmd)}",
             f"cwd: {cwd}",
         )
-        (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
+
+        remote_os = self.remotesys.getOSName()
+        if remote_os == "Windows":
+            (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
+        else:
+            squish_prefix = self.remotesys.getEnvironmentVariable("SQUISH_PREFIX")
+            cmd_str = squish_prefix + " ".join(cmd)
+            (exitcode, stdout, stderr) = self.remotesys.execute(
+                ["sh", "-c", cmd_str], cwd
+            )
+
         if exitcode != "0":
             raise SquishserverError(
                 f"[Squishserver {self.host}:{self.port}] "
@@ -109,7 +119,7 @@ class SquishServer:
             aut (str): the name of the executable
             path (str): path to the executable folder
         """
-        path_resolved = PureWindowsPath(path).as_posix()
+        path_resolved = PureWindowsPath(path).as_posix().strip()
         log(
             f"[Squishserver {self.host}:{self.port}] "
             f"Registering {path_resolved}/{aut} AUT"
