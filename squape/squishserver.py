@@ -77,7 +77,7 @@ class SquishServer:
             config_option (str): the config option to be used during configuration.
             params (list, optional): the configuration parameters. Defaults to [].
             cwd (str):  the path to the current working directory.
-                        Defaults to the "SQUISH_PREFIX" environment vairable.
+                        Defaults to the squishserver location.
         """
         if params is None:
             params = []
@@ -94,8 +94,7 @@ class SquishServer:
         if self.remotesys.getOSName() == "Windows":
             (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
         else:
-            squish_prefix = self.remotesys.getEnvironmentVariable("SQUISH_PREFIX")
-            cmd_str = squish_prefix + "/bin/" + " ".join(cmd)
+            cmd_str = self.location + "/bin/" + " ".join(cmd)
             (exitcode, stdout, stderr) = self.remotesys.execute(
                 ["sh", "-c", cmd_str], cwd
             )
