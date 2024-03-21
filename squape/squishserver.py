@@ -91,8 +91,7 @@ class SquishServer:
             f"cwd: {cwd}",
         )
 
-        remote_os = self.remotesys.getOSName()
-        if remote_os == "Windows":
+        if self.remotesys.getOSName() == "Windows":
             (exitcode, stdout, stderr) = self.remotesys.execute(cmd, cwd)
         else:
             squish_prefix = self.remotesys.getEnvironmentVariable("SQUISH_PREFIX")
