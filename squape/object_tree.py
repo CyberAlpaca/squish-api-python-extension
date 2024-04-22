@@ -15,6 +15,8 @@ except ImportError:
 
 import object
 from squape.settings import objectNotFoundDebugging
+from squape.report import debug
+
 
 def children(object_or_name: any, selector: dict) -> tuple:
     """
@@ -279,13 +281,14 @@ def _wait_for_any_object(
     lookup_errors = set()
     start_time = time.time()
     elapsed_time = 0
-    
+
     while elapsed_time < timeout:
         for obj_name in object_names:
             try:
                 return lookup_function(obj_name, 0)
 
             except LookupError as e:
+                debug(f"{e}")
                 lookup_errors.add(str(e))
 
         elapsed_time = time.time() - start_time
