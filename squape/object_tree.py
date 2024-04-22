@@ -278,8 +278,9 @@ def _wait_for_any_object(
 ):
     lookup_errors = set()
     start_time = time.time()
-
-    while True:
+    elapsed_time = 0
+    
+    while elapsed_time < timeout:
         for obj_name in object_names:
             try:
                 return lookup_function(obj_name, 0)
@@ -288,9 +289,6 @@ def _wait_for_any_object(
                 lookup_errors.add(str(e))
 
         elapsed_time = time.time() - start_time
-        if elapsed_time > timeout:
-            break
-
         squish.snooze(retry_delay)
 
     raise LookupError(f"Objects not found: {lookup_errors}")
