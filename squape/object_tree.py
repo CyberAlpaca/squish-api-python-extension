@@ -14,8 +14,7 @@ except ImportError:
     import squishtest as squish
 
 import object
-from settings import objectNotFoundDebugging
-
+from squape.settings import objectNotFoundDebugging
 
 def children(object_or_name: any, selector: dict) -> tuple:
     """
