@@ -278,7 +278,6 @@ def _get_object_reference(object_or_name: any) -> any:
 def _wait_for_any_object(
     lookup_function, object_names: list, timeout: int, retry_delay: float
 ):
-    lookup_errors = set()
     start_time = time.time()
 
     while time.time() - start_time < timeout:
@@ -288,11 +287,10 @@ def _wait_for_any_object(
 
             except LookupError as e:
                 debug(f"{e}")
-                lookup_errors.add(str(e))
 
         squish.snooze(retry_delay)
 
-    raise LookupError(f"Objects not found: {lookup_errors}")
+    raise LookupError(f"Objects {object_names} not found")
 
 
 def wait_for_any_object(
