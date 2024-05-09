@@ -278,6 +278,9 @@ def _get_object_reference(object_or_name: any) -> any:
 def _wait_for_any_object(
     lookup_function, object_names: list, timeout: int, retry_delay: float
 ):
+    if not object_names:
+        raise ValueError("Object names list is empty!")
+
     start_time = time.time()
 
     while time.time() - start_time < timeout:
@@ -316,6 +319,7 @@ def wait_for_any_object(
     Raises:
         LookupError: If none of the objects become available within
             the specified timeout.
+        ValueError: If object_names list is empty
     """
     return _wait_for_any_object(
         squish.waitForObject, object_names, timeout, retry_delay=retry_delay
@@ -345,6 +349,7 @@ def wait_for_any_object_exists(
     Raises:
         LookupError: If none of the objects become available within
             the specified timeout.
+        ValueError: If object_names list is empty
     """
     return _wait_for_any_object(
         squish.waitForObjectExists, object_names, timeout, retry_delay=retry_delay
