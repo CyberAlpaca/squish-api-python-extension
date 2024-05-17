@@ -5,6 +5,7 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 import math
+import time
 import types
 
 try:
@@ -13,6 +14,8 @@ except ImportError:
     import squishtest as squish
 
 import object
+from squape.settings import objectNotFoundDebugging
+from squape.report import debug
 
 
 def children(object_or_name: any, selector: dict) -> tuple:
@@ -269,3 +272,85 @@ def _get_object_reference(object_or_name: any) -> any:
         # Symbolic name
         return squish.waitForObjectExists(object_or_name)
     return object_or_name
+
+
+@objectNotFoundDebugging(False)
+def _wait_for_any_object(
+    lookup_function, object_names: list, timeout: int, retry_delay: float
+):
+    if not object_names:
+        raise ValueError("Object names list is empty!")
+
+    start_time = time.time()
+
+    while time.time() - start_time < timeout:
+        for obj_name in object_names:
+            try:
+                return lookup_function(obj_name, 0)
+
+            except LookupError as e:
+                debug(f"{e}")
+
+        squish.snooze(retry_delay)
+
+    raise LookupError(f"Objects {object_names} not found")
+
+
+def wait_for_any_object(
+    object_names: list,
+    timeout=squish.testSettings.waitForObjectTimeout / 1000,
+    retry_delay: float = 0.5,
+):
+    """
+    Wait for any accessible object from the provided object names list to become
+    available (exists, visible, enabled) within a specified timeout.
+
+    Args:
+        object_names (list): A list of names of the objects to wait for.
+        timeout (int, optional): The maximum time in seconds to wait for
+            any object to become available.
+            Defaults to squish.testSettings.waitForObjectTimeout/1000.
+        retry_delay (float, optional): The time in seconds to wait before
+        retrying the Squish lookup function. Defaults to 0.5.
+
+    Returns:
+        object: The first object that becomes available within the specified timeout.
+
+    Raises:
+        LookupError: If none of the objects become available within
+            the specified timeout.
+        ValueError: If object_names list is empty
+    """
+    return _wait_for_any_object(
+        squish.waitForObject, object_names, timeout, retry_delay=retry_delay
+    )
+
+
+def wait_for_any_object_exists(
+    object_names: list,
+    timeout=squish.testSettings.waitForObjectTimeout / 1000,
+    retry_delay: float = 0.5,
+):
+    """
+    Wait for object from the provided object names list to become
+    available (exists) within a specified timeout.
+
+    Args:
+        object_names (list): A list of names of the objects to wait for.
+        timeout (int, optional): The maximum time in seconds to wait for
+            any object to become available.
+            Defaults to squish.testSettings.waitForObjectTimeout/1000.
+        retry_delay (float, optional): The time in seconds to wait before
+            retrying the Squish lookup function. Defaults to 0.5.
+
+    Returns:
+        object: The first object that becomes available within the specified timeout.
+
+    Raises:
+        LookupError: If none of the objects become available within
+            the specified timeout.
+        ValueError: If object_names list is empty
+    """
+    return _wait_for_any_object(
+        squish.waitForObjectExists, object_names, timeout, retry_delay=retry_delay
+    )
