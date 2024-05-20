@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from pathlib import Path
+from typing import List
 
 try:
     import squish
@@ -87,6 +88,11 @@ class SquishServer:
     def remotesys(self) -> RemoteSystem:
         """RemoteSystem of the squishserver."""
         return self._remotesys
+
+    @property
+    def os_name(self) -> str:
+        """Operating System name of the squishserver."""
+        return self.remotesys.getOSName()
 
     def _config_squishserver(self, config_option: str, params=None, cwd=None):
         """Configures the squishserver by calling 'squishserver --config ...' command
@@ -229,3 +235,45 @@ class SquishServer:
         log(f"[Squishserver {self.host}:{self.port}] " f"Start an application {aut}")
         ctx = squish.startApplication(aut, self.host, self.port)
         return ctx
+
+    def execute_cmd_sync(self, command: str, options: List[str] = None) -> List[str]:
+        """Executes the command with optional arguments synchronously.
+        This convenience function runs a command as is, leveraging the environment
+        settings provided by the squishserver.
+
+        For more advanced use cases, such as specifying a custom current working
+        directory (cwd) or environment variables, please use the
+        `squishserver.remotesys.execute(...)` method directly.
+
+        Args:
+            command (str): The command to execute
+            options (List[str]): A list of options for the command
+
+        Returns:
+            A list/array with three elements: exitcode, stdout, stderr
+        """
+        cmd = [command] + (options or [])
+        return self.remotesys.execute(cmd)
+
+    def execute_cmd_async(self, command: str, options: List[str]) -> None:
+        """Executes the command with optional arguments asynchronously.
+        This convenience function runs a command as is, leveraging the environment
+        settings provided by the squishserver.
+
+        For more advanced use cases, such as specifying a custom current working
+        directory (cwd) or environment variables, please use the
+        `squishserver.remotesys.execute(...)` method directly.
+
+        Args:
+            command (str): The command to execute
+            options (List[str]): A list of options for the command
+
+        Returns:
+            ?
+        """
+        options = options or []
+        if self.os_name == "Windows":
+            cmd = ["cmd.exe", "/s", "/c", "start", "", "/min", command, *options]
+        else:
+            cmd = ["sh", "-c", f"{command} {' '.join(options)}"]
+        self.remotesys.execute(cmd)
