@@ -29,7 +29,7 @@ class SquishServer:
                 If not provided, the value of the squishrunner's "--host"
                 will be used if set.
                 If "--host" was not set, the default value "127.0.0.1" will be used.
-            port (int, optional): The host of the squishserver.
+            port (int, optional): The port of the squishserver.
                 If provided, this value will be used.
                 If not provided, the value of the squishrunner's "--port"
                 will be used if set.
@@ -37,20 +37,20 @@ class SquishServer:
         """
 
         if host is None:
-            self.host = os.environ.get("SQUISHRUNNER_HOST", "127.0.0.1")
+            self._host = os.environ.get("SQUISHRUNNER_HOST", "127.0.0.1")
         else:
-            self.host = host
+            self._host = host
 
         if port is None:
             if "SQUISHRUNNER_PORT" in os.environ:
-                self.port = int(os.environ["SQUISHRUNNER_PORT"])
+                self._port = int(os.environ["SQUISHRUNNER_PORT"])
             else:
-                self.port = 4322
+                self._port = 4322
         else:
-            self.port = port
+            self._port = port
 
         try:
-            self.remotesys = RemoteSystem(host, port)
+            self._remotesys = RemoteSystem(host, port)
         except Exception:
             raise SquishserverError(
                 f"Unable to connect to squishserver ({self.host}:{self.port})"
@@ -58,7 +58,7 @@ class SquishServer:
 
         if location is None:
             try:
-                self.location = self.remotesys.getEnvironmentVariable("SQUISH_PREFIX")
+                self._location = self.remotesys.getEnvironmentVariable("SQUISH_PREFIX")
             except KeyError:
                 raise EnvironmentError(
                     "The SQUISH_PREFIX environment variable is not set, "
@@ -66,7 +66,27 @@ class SquishServer:
                     f"({self.host}:{self.port}) is not specified!"
                 )
         else:
-            self.location = location
+            self._location = location
+
+    @property
+    def host(self) -> str:
+        """The host of the squishserver."""
+        return self._host
+
+    @property
+    def port(self) -> int:
+        """The port of the squishserver."""
+        return self._port
+
+    @property
+    def location(self) -> str:
+        """The location of the Squish package."""
+        return self._location
+
+    @property
+    def remotesys(self) -> RemoteSystem:
+        """RemoteSystem of the squishserver."""
+        return self._remotesys
 
     def _config_squishserver(self, config_option: str, params=None, cwd=None):
         """Configures the squishserver by calling 'squishserver --config ...' command
