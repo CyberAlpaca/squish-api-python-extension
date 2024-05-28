@@ -255,7 +255,7 @@ class SquishServer:
         cmd = [command] + (options or [])
         return self.remotesys.execute(cmd)
 
-    def execute_cmd_async(self, command: str, options: List[str]) -> None:
+    def execute_cmd_async(self, command: str, options: List[str] = None) -> None:
         """Executes the command with optional arguments asynchronously.
         This convenience function runs a command as is, leveraging the environment
         settings provided by the squishserver.
@@ -275,5 +275,5 @@ class SquishServer:
         if self.os_name == "Windows":
             cmd = ["cmd.exe", "/s", "/c", "start", "", "/min", command, *options]
         else:
-            cmd = ["sh", "-c", f"{command} {' '.join(options)}"]
+            cmd = ["sh", "-c", f"{command} {' '.join(options)} >/dev/null 2>&1 &"]
         self.remotesys.execute(cmd)
