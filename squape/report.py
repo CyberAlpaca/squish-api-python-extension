@@ -265,7 +265,7 @@ def section(title: str, description: str = "") -> None:
         ```
     """
 
-    test.fixateResultContext(1)
+    test.fixateResultContext(2)
     test.startSection(title, description)
     test.restoreResultContext()
     try:
