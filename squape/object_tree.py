@@ -170,8 +170,7 @@ def siblings(object_or_name: any, selector: dict = None) -> tuple:
         selector (dict, optional): The selector is a dictionary of key-value pairs,
             where a key is a property of an object, and value is expected value.
             An object will pass verification
-            if the object's property value matches the selector value.
-            Selectors may include functions.
+            if the object's propertySelectors may include functions.
             The passed functions must accept exactly one argument.
             Defaults to {}, which means all objects pass the verification.
 
@@ -241,7 +240,7 @@ def _is_matching(object_or_name: any, selector: dict) -> bool:
             # object has given attribute
             attr = getattr(object_reference, key)
             if isinstance(expected_value, types.FunctionType):
-                # The key is a lambda function
+                # The expected_value is a lambda function
                 lambda_function = expected_value
                 lambda_result = lambda_function(attr)
                 if not isinstance(lambda_result, bool):
