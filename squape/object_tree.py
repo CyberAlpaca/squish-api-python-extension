@@ -26,11 +26,12 @@ def children(object_or_name: any, selector: dict) -> tuple:
         object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
-            where a key is a property of an object, and value is expected value.
+            where a key is a property of an object  and value is expected value
+            or function. The passed functions must accept exactly one argument.
+            Accepted key is also 'type' and then value should by object type.
             An object will pass verification
             if the object's property value matches the selector value.
-            Selectors may include functions.
-            The passed functions must accept exactly one argument.
+            Defaults to {}, which means all objects pass the verification.
 
     Returns:
         Children objects that met the selector criteria.
@@ -62,11 +63,11 @@ def find(object_or_name: any, selector: dict = None, max_depth: int = None) -> t
         object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
-            where a key is a property of an object, and value is expected value.
+            where a key is a property of an object  and value is expected value
+            or function. The passed functions must accept exactly one argument.
+            Accepted key is also 'type' and then value should by object type.
             An object will pass verification
             if the object's property value matches the selector value.
-            Selectors may include functions.
-            The passed functions must accept exactly one argument.
             Defaults to {}, which means all objects pass the verification.
 
         max_depth (int): defines maximum depth in the object structure that should be
@@ -122,11 +123,12 @@ def find_ancestor(object_or_name: any, selector: dict):
         object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
-            where a key is a property of an object, and value is expected value.
+            where a key is a property of an object  and value is expected value
+            or function. The passed functions must accept exactly one argument.
+            Accepted key is also 'type' and then value should by object type.
             An object will pass verification
             if the object's property value matches the selector value.
-            Selectors may include functions.
-            The passed functions must accept exactly one argument.
+            Defaults to {}, which means all objects pass the verification.
 
     Returns:
         (Squish object / None): The ancestor object that matches the selector.
@@ -168,10 +170,11 @@ def siblings(object_or_name: any, selector: dict = None) -> tuple:
         object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
-            where a key is a property of an object, and value is expected value.
+            where a key is a property of an object  and value is expected value
+            or function. The passed functions must accept exactly one argument.
+            Accepted key is also 'type' and then value should by object type.
             An object will pass verification
-            if the object's propertySelectors may include functions.
-            The passed functions must accept exactly one argument.
+            if the object's property value matches the selector value.
             Defaults to {}, which means all objects pass the verification.
 
     Returns:
@@ -212,11 +215,11 @@ def _is_matching(object_or_name: any, selector: dict) -> bool:
         object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict, optional): The selector is a dictionary of key-value pairs,
-            where a key is a property of an object, and value is expected value.
+            where a key is a property of an object  and value is expected value
+            or function. The passed functions must accept exactly one argument.
+            Accepted key is also 'type' and then value should by object type.
             An object will pass verification
             if the object's property value matches the selector value.
-            Selectors may include functions.
-            The passed functions must accept exactly one argument.
             Defaults to {}, which means all objects pass the verification.
 
     Returns:
