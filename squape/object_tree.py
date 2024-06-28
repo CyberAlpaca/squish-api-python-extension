@@ -26,14 +26,16 @@ def children(object_or_name: any, selector: dict) -> tuple:
         object_or_name (any): symbolic name, real name, or object reference.
 
         selector (dict): The selector is a dictionary of key-value pairs,
-The selector is a dictionary consisting of key-value pairs. In this dictionary:
-- Each key represents a property of an object.
-- Each value can either be an expected value for that property or a function that takes exactly one argument.
+        The selector is a dictionary consisting of key-value pairs.
+        In this dictionary:
+        - Each key represents a property of an object.
+        - Each value can either be an expected value for that property
+        or a function that takes exactly one argument.
 
-Additionally, the dictionary can have a key 'type' where the value should be the expected object type.
+        Additionally, the dictionary can have a key 'type'
+        where the value should be the expected object type.
             An object will pass verification
             if the object's property value matches the selector value.
-            Defaults to {}, which means all objects pass the verification.
 
     Returns:
         Children objects that met the selector criteria.
@@ -130,7 +132,6 @@ def find_ancestor(object_or_name: any, selector: dict):
             Accepted key is also 'type' and then value should by object type.
             An object will pass verification
             if the object's property value matches the selector value.
-            Defaults to {}, which means all objects pass the verification.
 
     Returns:
         (Squish object / None): The ancestor object that matches the selector.
