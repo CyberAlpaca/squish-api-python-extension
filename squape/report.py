@@ -4,7 +4,7 @@
 # All rights reserved.
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
-from contextlib import contextmanager
+import functools
 
 try:
     import squish
@@ -248,29 +248,49 @@ def enable_loglevel_in_test_module() -> None:
     test.fatal = fatal
 
 
-@contextmanager
-def section(title: str, description: str = "") -> None:
-    """Allows using Squish's sections as context managers
+class section:
+    """Allows using Squish's sections as context managers and function decorators
     https://doc.qt.io/squish/squish-api.html#test-startsection-function
-
-    Args:
-        title (str): Section title
-        description (str): Optional additional description of the section
-
-    Examples:
-        ```python
-        with section("Add new person"):
-            squish.type(squish.waitForObject(names.forename_edit), "Bob")
-            squish.mouseClick(squish.waitForObject(names.ok_button))
-        ```
     """
 
-    test.fixateResultContext(1)
-    test.startSection(title, description)
-    test.restoreResultContext()
-    try:
-        yield
-    except Exception:
-        raise
-    finally:
+    def __init__(self, title, description=""):
+        """
+        Args:
+            title (str): Section title
+            description (str): Optional additional description of the section
+
+        Examples:
+            ```python
+            with section("Add new person"):
+                squish.type(squish.waitForObject(names.forename_edit), "Bob")
+                squish.mouseClick(squish.waitForObject(names.ok_button))
+            ```
+        """
+        self.title = title
+        self.description = description
+
+    def __call__(self, func):
+        """Executed when section is used as a decorator"""
+
+        @functools.wraps(func)
+        def wrapped(*args, **kwargs):
+            test.fixateResultContext(1)
+            test.startSection(self.title, self.description)
+            test.restoreResultContext()
+            try:
+                result = func(*args, **kwargs)
+            finally:
+                test.endSection()
+            return result
+
+        return wrapped
+
+    def __enter__(self):
+        """Executed when section is used as a context manager"""
+        test.fixateResultContext(1)
+        test.startSection(self.title, self.description)
+        test.restoreResultContext()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Executed after section is used as a context manager"""
         test.endSection()
