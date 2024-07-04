@@ -34,7 +34,7 @@ class SquishServer:
                 If provided, this value will be used.
                 If not provided, the value of the squishrunner's "--port"
                 will be used if set.
-                If "--port" was not set, the default value "127.0.0.1" will be used.
+                If "--port" was not set, the default value "4322" will be used.
         """
 
         if host is None:
@@ -51,7 +51,7 @@ class SquishServer:
             self._port = port
 
         try:
-            self._remotesys = RemoteSystem(host, port)
+            self._remotesys = RemoteSystem(self.host, self.port)
         except Exception:
             raise SquishserverError(
                 f"Unable to connect to squishserver ({self.host}:{self.port})"
@@ -91,7 +91,7 @@ class SquishServer:
 
     @property
     def os_name(self) -> str:
-        """Operating System name of the squishserver."""
+        """Name of the Operating System where the squishserver is running."""
         return self.remotesys.getOSName()
 
     def _config_squishserver(self, config_option: str, params=None, cwd=None):
@@ -269,7 +269,7 @@ class SquishServer:
             options (List[str]): A list of options for the command
 
         Returns:
-            ?
+            None
         """
         options = options or []
         if self.os_name == "Windows":
