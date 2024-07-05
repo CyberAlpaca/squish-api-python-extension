@@ -1,3 +1,14 @@
+# 1.1 (2024-07-05)
+## New Features
+- object_tree module - function to wait for any object from the provided object names list (#52)
+- squishserver module - Add sync and async command execution methods (#54)
+
+## Bugfixes
+- report module - Set result context to proper value and fix section results entries to point to proper script lines (#55)
+
+## Improvements
+- object_tree - Documentation for multiple functions (#56)
+
 # 1.0.1 (2024-01-18)
 ## Bugfixes
 - squishserver module - fix handling of the host, port, and location of the target squishserver (#48)
